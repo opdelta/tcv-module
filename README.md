@@ -33,21 +33,30 @@ Il faut d'abord récupérer le projet. Une fois récupéré, il suffit de lancer
    
    - ```make``` compile le programme TP1.c pour créer un exécutable.
    
-   - ```make test``` lance l'exécutable créé.
+   - ```make test``` lance les tests unitaires et affiche à l'écran uniquement les tests qui réussissent.
    
-```cp.txt```
+   - ```cp.txt```  contient le nom et le code permanent de l'auteur.
 
-```.gitignore```
+   - ```.gitignore``` contient une liste de tous les fichiers à ignorer par Git. (Template utilisé: GitHub)
 
-```README.md```
+   - ```README.md``` Contient les informations du répertoire courant.
 
    ## Références
 
-   <citez vos sources ici>
-
+   - https://github.com/guyfrancoeur/INF3135_A2020/
+   
+   - https://www.gnu.org/software/make/manual/make.html#How-Make-Works
+   
+   - http://cunit.sourceforge.net/doxdocs/group__Framework.html
+   
+   - https://www.gnu.org/software/make/manual/html_node/Errors.html
+   
+   
    ## Statut
 
-   <indiquez si le projet est complété ou s'il y a des bogues>
+   Le TP1 est presque complété.
+   
+   Section TODO.
    
    ## Réponse
    
