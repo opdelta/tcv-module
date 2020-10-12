@@ -12,13 +12,14 @@ lib:
 	wget $(FILEURL) -P ./data
 	cd data; unzip $(FILENAME).zip -d ../;rm tp1.zip
 
-test: $(FILENAME)
-	./tp1 >> output.txt
-	./list.sh output.txt
-	rm output.txt
+test:
+	-./tp1 > output.txt
+	-./liste.sh output.txt
+	rm -f *.txt
 
 .PHONY: clean
 
 clean:
-	rm -f $(FILENAME)
+	rm -f $(FILENAME) *.o *.h *.txt
 	rm -rf data
+
