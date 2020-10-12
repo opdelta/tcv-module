@@ -104,13 +104,13 @@ void validerPulsation_1_Test(void) {
 }
 
 void validerPulsation_2_Test(void) {
-    CU_ASSERT_FALSE(validerPulsation_2(49));
-    CU_ASSERT_FALSE(validerPulsation_2(201));
-    CU_ASSERT_FALSE(validerPulsation_2(-10));
+    CU_ASSERT_FALSE(validerPulsation_2((char)49));
+    CU_ASSERT_FALSE(validerPulsation_2((char)201));
+    CU_ASSERT_FALSE(validerPulsation_2((char)-10));
 
-    CU_ASSERT_TRUE(validerPulsation_2(50));
-    CU_ASSERT_TRUE(validerPulsation_2(200));
-    CU_ASSERT_TRUE(validerPulsation_2(125));
+    CU_ASSERT_TRUE(validerPulsation_2((char)50));
+    CU_ASSERT_TRUE(validerPulsation_2((char)200));
+    CU_ASSERT_TRUE(validerPulsation_2((char)125));
 }
 void validerPulsation_3_Test(void) {
     CU_ASSERT_FALSE(validerPulsation_3(49));
@@ -132,13 +132,13 @@ void validerSignal_1_Test(void) {
 }
 
 void validerSignal_2_Test(void) {
-    CU_ASSERT_FALSE(validerSignal_2(-86));
-    CU_ASSERT_FALSE(validerSignal_2(-24));
-    CU_ASSERT_FALSE(validerSignal_2(0));
+    CU_ASSERT_FALSE(validerSignal_2((char)-86));
+    CU_ASSERT_FALSE(validerSignal_2((char)-24));
+    CU_ASSERT_FALSE(validerSignal_2((char)0));
 
-    CU_ASSERT_TRUE(validerSignal_2(-85));
-    CU_ASSERT_TRUE(validerSignal_2(-25));
-    CU_ASSERT_TRUE(validerSignal_2(-55));
+    CU_ASSERT_TRUE(validerSignal_2((char)-85));
+    CU_ASSERT_TRUE(validerSignal_2((char)-25));
+    CU_ASSERT_TRUE(validerSignal_2((char)-55));
 }
 void validerSignal_3_Test(void) {
     CU_ASSERT_FALSE(validerSignal_3(-86));
