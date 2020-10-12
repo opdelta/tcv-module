@@ -12,23 +12,14 @@ int init_suite(void) { return 0; }
 int clean_suite(void) { return 0; }
 
 /********************* NOS fonctions de tests *********************/
-/*
-void test_case_exemple(void)
-{
-   // Les types d'assertions disponibles
-   CU_ASSERT(CU_TRUE);
-   CU_ASSERT_TRUE(true);
-   CU_ASSERT_FALSE(false);
-   CU_ASSERT_NOT_EQUAL(2, -1);
-   CU_ASSERT_STRING_EQUAL("string #1", "string #1");
-   CU_ASSERT_STRING_NOT_EQUAL("string #1", "string #2");
 
-   CU_ASSERT(CU_FALSE);
-   CU_ASSERT_EQUAL(2, 3);
-   CU_ASSERT_STRING_NOT_EQUAL("string #1", "string #1");
-   CU_ASSERT_STRING_EQUAL("string #1", "string #2");
-}
-*/
+/**
+ * Test d'assertions pour l'intervalle de 17.0 a 40.0 Celsius.
+ * Afin de fonctionner, les decimales sont entieres donc 17.0 = 170.
+ *
+ * Test pour validerTH_1(int n)
+ *
+ */
 void validerTH_1_Test(void) {
 
 
@@ -41,6 +32,14 @@ void validerTH_1_Test(void) {
     CU_ASSERT_FALSE(validerTH_1(-400));
 
 }
+/**
+ * Test d'assertions pour l'intervalle de 17.0 a 40.0 Celsius.
+ * Afin de fonctionner, les decimales sont entieres donc 17.0 = 170.
+ * Cast en char pour la compilation et l'execution.
+ *
+ * Test pour validerTH_2(char n)
+ *
+ */
 void validerTH_2_Test(void) {
 
     CU_ASSERT_TRUE(validerTH_2((char)170));
@@ -52,6 +51,13 @@ void validerTH_2_Test(void) {
     CU_ASSERT_FALSE(validerTH_2((char)-400));
 
 }
+/**
+ * Test d'assertions pour l'intervalle de 17.0 a 40.0 Celsius.
+ * Afin de fonctionner, les decimales sont entieres donc 17.0 = 170.
+ *
+ * Test pour validerTH_3(short n)
+ *
+ */
 void validerTH_3_Test(void) {
 
     CU_ASSERT_TRUE(validerTH_3(170));
@@ -63,6 +69,12 @@ void validerTH_3_Test(void) {
     CU_ASSERT_FALSE(validerTH_3(-400));
 
 }
+/**
+ * Test d'assertions pour la temperature ambiante de -40.0 a 40.0 Celsius.
+ * Afin de fonctionner, les decimales sont entieres donc -40.0 = -400.
+ *
+ * Test pour validerTA_1(int n)
+ */
 void validerTA_1_Test(void) {
 
     CU_ASSERT_FALSE(validerTA_1(-401));
@@ -73,6 +85,14 @@ void validerTA_1_Test(void) {
     CU_ASSERT_TRUE(validerTA_1(-400));
     CU_ASSERT_TRUE(validerTA_1(400));
 }
+/**
+ * Test d'assertions pour la temperature ambiante de -40.0 a 40.0 Celsius.
+ * Afin de fonctionner, les decimales sont entieres donc -40.0 = -400.
+ *
+ * Cast en char pour compilation et fonctionnement.
+ *
+ * Test pour validerTA_2(char n)
+ */
 void validerTA_2_Test(void) {
 
     CU_ASSERT_FALSE(validerTA_2((char)-401));
@@ -83,6 +103,13 @@ void validerTA_2_Test(void) {
     CU_ASSERT_TRUE(validerTA_2((char)-400));
     CU_ASSERT_TRUE(validerTA_2((char)400));
 }
+
+/**
+ * Test d'assertions pour la temperature ambiante de -40.0 a 40.0 Celsius.
+ * Afin de fonctionner, les decimales sont entieres donc -40.0 = -400.
+ *
+ * Test pour validerTA_3(short n)
+ */
 void validerTA_3_Test(void) {
 
     CU_ASSERT_FALSE(validerTA_3(-401));
@@ -93,6 +120,11 @@ void validerTA_3_Test(void) {
     CU_ASSERT_TRUE(validerTA_3(-400));
     CU_ASSERT_TRUE(validerTA_3(400));
 }
+/**
+ * Test d'assertions pour la pulsation de 50 a 200 bpm.
+ *
+ * Test pour validerPulsation_1(int n)
+ */
 void validerPulsation_1_Test(void) {
     CU_ASSERT_FALSE(validerPulsation_1(49));
     CU_ASSERT_FALSE(validerPulsation_1(201));
@@ -102,7 +134,13 @@ void validerPulsation_1_Test(void) {
     CU_ASSERT_TRUE(validerPulsation_1(200));
     CU_ASSERT_TRUE(validerPulsation_1(125));
 }
-
+/**
+ * Test d'assertions pour la pulsation de 50 a 200 bpm.
+ *
+ * Cast en char pour compilation et fonctionnement.
+ *
+ * Test pour validerPulsation_2(char n)
+ */
 void validerPulsation_2_Test(void) {
     CU_ASSERT_FALSE(validerPulsation_2((char)49));
     CU_ASSERT_FALSE(validerPulsation_2((char)201));
@@ -112,6 +150,12 @@ void validerPulsation_2_Test(void) {
     CU_ASSERT_TRUE(validerPulsation_2((char)200));
     CU_ASSERT_TRUE(validerPulsation_2((char)125));
 }
+/**
+ * Test d'assertions pour la pulsation de 50 a 200 bpm.
+ *
+ *
+ * Test pour validerPulsation_3(short n)
+ */
 void validerPulsation_3_Test(void) {
     CU_ASSERT_FALSE(validerPulsation_3(49));
     CU_ASSERT_FALSE(validerPulsation_3(201));
@@ -121,6 +165,12 @@ void validerPulsation_3_Test(void) {
     CU_ASSERT_TRUE(validerPulsation_3(200));
     CU_ASSERT_TRUE(validerPulsation_3(125));
 }
+/**
+ * Test d'assertions pour l'intensite du signal de -85 a -25.
+ *
+ *
+ * Test pour validerSignal_1(int n)
+ */
 void validerSignal_1_Test(void) {
     CU_ASSERT_FALSE(validerSignal_1(-86));
     CU_ASSERT_FALSE(validerSignal_1(-24));
@@ -131,6 +181,13 @@ void validerSignal_1_Test(void) {
     CU_ASSERT_TRUE(validerSignal_1(-55));
 }
 
+/**
+ * Test d'assertions pour l'intensite du signal de -85 a -25.
+ *
+ * Cast en char pour compilation et fonctionnement.
+ *
+ * Test pour validerSignal_2(char n)
+ */
 void validerSignal_2_Test(void) {
     CU_ASSERT_FALSE(validerSignal_2((char)-86));
     CU_ASSERT_FALSE(validerSignal_2((char)-24));
@@ -140,6 +197,12 @@ void validerSignal_2_Test(void) {
     CU_ASSERT_TRUE(validerSignal_2((char)-25));
     CU_ASSERT_TRUE(validerSignal_2((char)-55));
 }
+/**
+ * Test d'assertions pour l'intensite du signal de -85 a -25.
+ *
+ *
+ * Test pour validerSignal_3(short n)
+ */
 void validerSignal_3_Test(void) {
     CU_ASSERT_FALSE(validerSignal_3(-86));
     CU_ASSERT_FALSE(validerSignal_3(-24));
