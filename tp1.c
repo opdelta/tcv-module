@@ -20,7 +20,7 @@ int clean_suite(void) { return 0; }
  * Test pour validerTH_1(int n)
  *
  */
-void validerTH_1_Test(void) {
+void test_validerTH_1(void) {
 
 
     CU_ASSERT_TRUE(validerTH_1(170));
@@ -40,7 +40,7 @@ void validerTH_1_Test(void) {
  * Test pour validerTH_2(char n)
  *
  */
-void validerTH_2_Test(void) {
+void test_validerTH_2(void) {
 
     CU_ASSERT_TRUE(validerTH_2((char)170));
     CU_ASSERT_TRUE(validerTH_2((char)390));
@@ -58,7 +58,7 @@ void validerTH_2_Test(void) {
  * Test pour validerTH_3(short n)
  *
  */
-void validerTH_3_Test(void) {
+void test_validerTH_3(void) {
 
     CU_ASSERT_TRUE(validerTH_3(170));
     CU_ASSERT_TRUE(validerTH_3(390));
@@ -75,7 +75,7 @@ void validerTH_3_Test(void) {
  *
  * Test pour validerTA_1(int n)
  */
-void validerTA_1_Test(void) {
+void test_validerTA_1(void) {
 
     CU_ASSERT_FALSE(validerTA_1(-401));
     CU_ASSERT_FALSE(validerTA_1(401));
@@ -93,7 +93,7 @@ void validerTA_1_Test(void) {
  *
  * Test pour validerTA_2(char n)
  */
-void validerTA_2_Test(void) {
+void test_validerTA_2(void) {
 
     CU_ASSERT_FALSE(validerTA_2((char)-401));
     CU_ASSERT_FALSE(validerTA_2((char)401));
@@ -110,7 +110,7 @@ void validerTA_2_Test(void) {
  *
  * Test pour validerTA_3(short n)
  */
-void validerTA_3_Test(void) {
+void test_validerTA_3(void) {
 
     CU_ASSERT_FALSE(validerTA_3(-401));
     CU_ASSERT_FALSE(validerTA_3(401));
@@ -125,7 +125,7 @@ void validerTA_3_Test(void) {
  *
  * Test pour validerPulsation_1(int n)
  */
-void validerPulsation_1_Test(void) {
+void test_validerPulsation_1(void) {
     CU_ASSERT_FALSE(validerPulsation_1(49));
     CU_ASSERT_FALSE(validerPulsation_1(201));
     CU_ASSERT_FALSE(validerPulsation_1(-10));
@@ -141,7 +141,7 @@ void validerPulsation_1_Test(void) {
  *
  * Test pour validerPulsation_2(char n)
  */
-void validerPulsation_2_Test(void) {
+void test_validerPulsation_2(void) {
     CU_ASSERT_FALSE(validerPulsation_2((char)49));
     CU_ASSERT_FALSE(validerPulsation_2((char)201));
     CU_ASSERT_FALSE(validerPulsation_2((char)-10));
@@ -156,7 +156,7 @@ void validerPulsation_2_Test(void) {
  *
  * Test pour validerPulsation_3(short n)
  */
-void validerPulsation_3_Test(void) {
+void test_validerPulsation_3(void) {
     CU_ASSERT_FALSE(validerPulsation_3(49));
     CU_ASSERT_FALSE(validerPulsation_3(201));
     CU_ASSERT_FALSE(validerPulsation_3(-10));
@@ -171,7 +171,7 @@ void validerPulsation_3_Test(void) {
  *
  * Test pour validerSignal_1(int n)
  */
-void validerSignal_1_Test(void) {
+void test_validerSignal_1(void) {
     CU_ASSERT_FALSE(validerSignal_1(-86));
     CU_ASSERT_FALSE(validerSignal_1(-24));
     CU_ASSERT_FALSE(validerSignal_1(0));
@@ -188,7 +188,7 @@ void validerSignal_1_Test(void) {
  *
  * Test pour validerSignal_2(char n)
  */
-void validerSignal_2_Test(void) {
+void test_validerSignal_2(void) {
     CU_ASSERT_FALSE(validerSignal_2((char)-86));
     CU_ASSERT_FALSE(validerSignal_2((char)-24));
     CU_ASSERT_FALSE(validerSignal_2((char)0));
@@ -203,7 +203,7 @@ void validerSignal_2_Test(void) {
  *
  * Test pour validerSignal_3(short n)
  */
-void validerSignal_3_Test(void) {
+void test_validerSignal_3(void) {
     CU_ASSERT_FALSE(validerSignal_3(-86));
     CU_ASSERT_FALSE(validerSignal_3(-24));
     CU_ASSERT_FALSE(validerSignal_3(0));
@@ -230,18 +230,18 @@ int main ( void )
     }
 
     /* add the tests to the suite */
-    if ( (NULL == CU_add_test(pSuite, "validerTH_1_Test", validerTH_1_Test)) ||
-         (NULL == CU_add_test(pSuite, "validerTH_2_Test", validerTH_2_Test)) ||
-         (NULL == CU_add_test(pSuite, "validerTH_3_Test", validerTH_3_Test)) ||
-         (NULL == CU_add_test(pSuite, "validerTA_1_Test", validerTA_1_Test)) ||
-         (NULL == CU_add_test(pSuite, "validerTA_2_Test", validerTA_2_Test)) ||
-         (NULL == CU_add_test(pSuite, "validerTA_3_Test", validerTA_3_Test)) ||
-         (NULL == CU_add_test(pSuite, "validerPulsation_1_Test", validerPulsation_1_Test)) ||
-         (NULL == CU_add_test(pSuite, "validerPulsation_2_Test", validerPulsation_2_Test)) ||
-         (NULL == CU_add_test(pSuite, "validerPulsation_3_Test", validerPulsation_3_Test)) ||
-         (NULL == CU_add_test(pSuite, "validerSignal_1_Test", validerSignal_1_Test)) ||
-         (NULL == CU_add_test(pSuite, "validerSignal_2_Test", validerSignal_2_Test)) ||
-         (NULL == CU_add_test(pSuite, "validerSignal_3_Test", validerSignal_3_Test)))
+    if ( (NULL == CU_add_test(pSuite, "test_validerTH_1", test_validerTH_1)) ||
+         (NULL == CU_add_test(pSuite, "test_validerTH_2", test_validerTH_2)) ||
+         (NULL == CU_add_test(pSuite, "test_validerTH_3", test_validerTH_3)) ||
+         (NULL == CU_add_test(pSuite, "test_validerTA_1", test_validerTA_1)) ||
+         (NULL == CU_add_test(pSuite, "test_validerTA_2", test_validerTA_2)) ||
+         (NULL == CU_add_test(pSuite, "test_validerTA_3", test_validerTA_3)) ||
+         (NULL == CU_add_test(pSuite, "test_validerPulsation_1", test_validerPulsation_1)) ||
+         (NULL == CU_add_test(pSuite, "test_validerPulsation_2", test_validerPulsation_2)) ||
+         (NULL == CU_add_test(pSuite, "test_validerPulsation_3", test_validerPulsation_3)) ||
+         (NULL == CU_add_test(pSuite, "test_validerSignal_1", test_validerSignal_1)) ||
+         (NULL == CU_add_test(pSuite, "test_validerSignal_2", test_validerSignal_2)) ||
+         (NULL == CU_add_test(pSuite, "test_validerSignal_3", test_validerSignal_3)))
     {
         CU_cleanup_registry();
         return CU_get_error();
