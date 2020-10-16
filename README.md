@@ -54,14 +54,36 @@ Il faut d'abord récupérer le projet. Une fois récupéré, il suffit de lancer
    
    ## Statut
 
-   Le TP1 est presque complété.
+Les tests unitaires ont cherché à tester chacune des fonctions présentes dans le TCV.h afin de comprendre un peu mieux lesquels sont fonctionnels et lesquels ne sont pas.
+
+Les fonctions fonctionnelles sont les suivantes:
+```bash
+validerTH_1
+validerTA_3
+validerPulsation_3
+validerSignal_2
+```
+   Au moins une fonction de chaque passe, ce qui pourrait être essentiel lors de la suite du développement.
    
-   Section TODO.
+   Chaque test cherchait à valider les bornes des fonctions, une valeur en plein milieu des bornes et des valeurs à l'extrême. Donc pour chaque test, il y avait à peu près 6 asserts.
    
    ## Réponse
    
-   <s'il y a des questions répondre ici>
+   ```Q1:``` Les ordinateurs fonctionne en base de 2 (0 et 1). Un système binaire est plus facile à traiter pour un ordinateur que les coder en base 10. Les décimales sont nocives simplement, car le temps necéssaire pour traiter une valeur décimale en BCD (Binary-coded decimal). Il fonctionne en transformant des séquences binaires de manière à pouvoir être interprêté en base 10 et décimales.
+   
+   ```Q2:``` Les types de données dont importantes à respecter, car dans le cas contraire, on se retrouve avec un overflow (une surcharge) et des valeurs non voulues peuvent être représentés. Un type de donnée qui supporte que des valeurs de -127 à 127 peut agir de manière non voulue lorsqu'on ne respecte pas son type et qu'on lui passe en paramètre un nombre plus gros ou plus petit. 
    
    ## Autoévaluation
    
-   <mon travail vaut quelques points en fonction du barème>
+
+| Critère | Sous-critère | Points |
+| ------- |:------------ | ------:|
+| Fonctionnabilité  | tests seront lancés (comparaison binaire)      | 3.0 |
+| Bash              | script qui liste les fonctions parfaites       | 0.5 |
+| Compilation       | sans avertissement ni erreur                   | 1.0 |
+| Récupération      | récupération sans problème et dépôt privée     | 1.0 |
+| Branche (git)     | nommée testunitaire (branche de développement) | 1.0 |
+| Makefile          | <ul><li>make</li><li>make clean</li><li>make lib</li><li>make test</li></ul> | <ul><li>0.5</li><li>0.5</li><li>0.5</li><li>0.25</li></ul> |
+| Markdown          | README.md                                      | 0.5 |
+| Professionnel     | :wink: (simple et sans mystère)                | 0.5 |
+| **Total**         |                                                | 9.25  |
