@@ -83,7 +83,7 @@ validerSignal_2
 | Compilation       | sans avertissement ni erreur                   | 1.0 |
 | Récupération      | récupération sans problème et dépôt privée     | 1.0 |
 | Branche (git)     | nommée testunitaire (branche de développement) | 1.0 |
-| Makefile          | <ul><li>make</li><li>make clean</li><li>make lib</li><li>make test</li></ul> | <ul><li>0.5</li><li>0.5</li><li>0.5</li><li>0.5</li></ul> |
+| Makefile          | <ul><li>make</li><li>make clean</li><li>make lib</li><li>make test</li></ul> | <ul><li>0.5</li><li>0.5</li><li>0.5</li><li>0.25</li></ul> |
 | Markdown          | README.md                                      | 0.5 |
 | Professionnel     | :wink: (simple et sans mystère)                | 0.5 |
-| **Total**         |                                                | 9.5  |
+| **Total**         |                                                | 9.25  |
