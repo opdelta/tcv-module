@@ -13,7 +13,7 @@
 
    ## Fonctionnement
    
-Il faut d'abord récupérer le projet. Une fois récupéré, il suffit de lancer les commandes suivantes en ordre:
+Il faut d'abord récupérer le projet dans la branche ```testunitaire```. Une fois récupéré, il suffit de lancer les commandes suivantes en ordre:
 
 - La première commande est ```make lib```. Cette commande permet d'initialiser le dossier avec les fichiers nécessaires.
 
@@ -21,7 +21,7 @@ Il faut d'abord récupérer le projet. Une fois récupéré, il suffit de lancer
 
 - Finalement, il suffit de lancer la commande ```make test```. Les tests unitaires devraient s'exécuter et afficher à l'écran un ensemble de tests réussis et échoués.
 
-   ## Contenu du projet
+   ## Contenu du projet dans la branche ```testunitaire```
 
 ```tp1.c``` Le code source des tests unitaires pour les méthodes fournis du programme TCV.
 
