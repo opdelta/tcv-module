@@ -8,53 +8,53 @@ int timestamp;
 int signature;
 int id;
 unsigned char  emetteurPow;
-}id;
+}Id;
 
-struct getIdentification{int _timestamp; int _signature; int _id; unsigned char  _emetteurPow;};
+Id* getIdentification(int _timestamp, int _signature, float _id, unsigned char _emetteurPow);
 
 typedef struct {
 int timestamp;
 int signature;
 float temp;
 int error; //0 = no error 1 = error
-}temperatureH;
+}TemperatureH;
 
-struct getTemperatureH{int _timestamp; int _signature; float _temp; int _error;};
+TemperatureH* getTemperatureH(int _timestamp, int _signature, float _temp, int _error);
 
 typedef struct {
 int timestamp;
 int signature;
 float temp;
 int error; // 0 = no error 1 = error
-}temperatureA;
+}TemperatureA;
 
-struct getTemperatureA{int _timestamp; int _signature; float _temp; int _error;};
+TemperatureA* getTemperatureA(int _timestamp, int _signature, float _temp, int _error);
 
 typedef struct {
 int timestamp;
 int signature;
 float pulse;
 int error; //0 = no error 1 = error
-}pulsation;
+}Pulsation;
 
-struct getPulsation{int _timestamp; int _signature; float _pulse; int _error;};
+Pulsation* getPulsation(int _timestamp, int _signature, float _pulse, int _error);
 
 typedef struct {
 int timestamp;
 int signature;
 signed short signalRSSI;
 int id;
-}rssiSignal;
+}RssiSignal;
 
-struct getrssiSignal{int _timestamp; int _signature; signed short _signalRSSI; int _id;};
+RssiSignal* getrssiSignal(int _timestamp, int _signature, signed short _signalRSSI, int _id);
 
 typedef struct {
 int timestamp;
 int signature;
 int id;
 int idpn [];
-}echangeDonnees;
+}EchangeDonnees;
 
-struct getEchangeDonnees{int _timestamp; int _signature; int _id; int idpn [];};
+EchangeDonnees* getEchangeDonnees(int _timestamp, int _signature, int _id, int _idpn []);
 
 #endif
