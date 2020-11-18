@@ -1,6 +1,7 @@
 //malib.c
 #include "malib.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 Id* getIdentification(int _timestamp, int _signature, float _id, unsigned char _emetteurPow) {
 
@@ -11,7 +12,7 @@ Id* getIdentification(int _timestamp, int _signature, float _id, unsigned char _
         _emetteurPow = 2;
     }
 
-    Id *identification;
+    Id *identification = malloc(sizeof(Id));
     identification->timestamp = _timestamp;
     identification->signature = _signature;
     identification->id = _id;
@@ -21,7 +22,7 @@ Id* getIdentification(int _timestamp, int _signature, float _id, unsigned char _
 }
 
 TemperatureH* getTemperatureH(int _timestamp, int _signature, float _temp, int _error) {
-    TemperatureH *tempH;
+    TemperatureH *tempH = malloc(sizeof(TemperatureH));
     tempH->timestamp = _timestamp;
     tempH->signature = _signature;
     if (_error == 0) {
@@ -32,7 +33,7 @@ TemperatureH* getTemperatureH(int _timestamp, int _signature, float _temp, int _
 }
 
 TemperatureA* getTemperatureA(int _timestamp, int _signature, float _temp, int _error) {
-    TemperatureA *tempA;
+    TemperatureA *tempA = malloc(sizeof(TemperatureA));
     tempA->timestamp = _timestamp;
     tempA->signature = _signature;
     if (_error == 0) {
@@ -43,7 +44,7 @@ TemperatureA* getTemperatureA(int _timestamp, int _signature, float _temp, int _
 }
 
 Pulsation* getPulsation(int _timestamp, int _signature, float _pulse, int _error) {
-    Pulsation *pulseParM;
+    Pulsation *pulseParM =malloc(sizeof(Pulsation));
     pulseParM->timestamp = _timestamp;
     pulseParM->signature = _signature;
     if (_error == 0) {
@@ -54,13 +55,10 @@ Pulsation* getPulsation(int _timestamp, int _signature, float _pulse, int _error
 }
 
 EchangeDonnees* getEchangeDonnees(int _timestamp, int _signature, int _id, int _idpn []) {
-    EchangeDonnees *data;
+    EchangeDonnees *data = malloc(sizeof(EchangeDonnees));
     data->timestamp = _timestamp;
     data->signature = _signature;
     data->id = _id;
-    int *idpnDynamic [] = malloc(sizeof(_idpn)*sizeof(int));
-
-    data->idpn = *idpnDynamic;
-
+    
     return data;
 }
