@@ -6,7 +6,7 @@
 typedef struct {
 int timestamp;
 int signature;
-int id;
+float id;
 unsigned char  emetteurPow;
 }Id;
 
