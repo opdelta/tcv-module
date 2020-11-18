@@ -62,3 +62,13 @@ EchangeDonnees* getEchangeDonnees(int _timestamp, int _signature, int _id, int _
     
     return data;
 }
+
+RssiSignal* getrssiSignal(int _timestamp, int _signature, signed short _signalRSSI, int _id) {
+    RssiSignal *rssi = malloc(sizeof(RssiSignal));
+    rssi->timestamp = _timestamp;
+    rssi->signature = _signature;
+    rssi->signalRSSI = _signalRSSI;
+    rssi->id = _id;
+
+    return rssi;
+}
