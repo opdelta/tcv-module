@@ -70,7 +70,13 @@ int strToId(char _line[]) {
   free(ident);
   return pow;
 }
-
+float distanceCalc(signed short _signal, int _pow) {
+  float temp1 = -69 - _signal;
+  float temp2 = 10 * _pow;
+  float temp3 = temp1/temp2;
+  float distance = pow(10,temp3);
+  return distance;
+}
 void strToRssi(char _line[], int _pow) {
   int timestamp = 0;
   int signature = 0;
@@ -85,11 +91,8 @@ void strToRssi(char _line[], int _pow) {
     args[size-1] = arg;
     arg = strtok(NULL, " ");
   }
-  float temp1 = -69 - atoi(args[2]);
-  float temp2 = 10 * _pow;
-  float temp3 = temp1/temp2;
-  float distance = pow(10,temp3);
-  printf("\ntemp1 is: %.1f\ntemp2 is: %.1f\ntemp3 is: %.1f\nDistance is: %.1f meters\n", temp1, temp2, temp3, distance);
+  signal = (signed short)atoi(args[2]);
+  float distance = distanceCalc(signal, _pow);
   /* Libere la memoire allouee */
   free (args);
 }
