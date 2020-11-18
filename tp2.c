@@ -22,7 +22,7 @@ char* getTransaction(char _line[]) {
    }
    return signature;
 }
-void strToId(char _line[]) {
+int strToId(char _line[]) {
   int timestamp = 0;
   int signature = 0;
   float id = 0;
@@ -68,6 +68,30 @@ void strToId(char _line[]) {
   /* Libere la memoire allouee */
   free (args);
   free(ident);
+  return pow;
+}
+
+void strToRssi(char _line[], int _pow) {
+  int timestamp = 0;
+  int signature = 0;
+  signed short signal = -69;
+  int id = 0;
+  char* arg = strtok(_line, " ");
+  char ** args = NULL;
+  int size = 0;
+  /*Separe la ligne en tokens et les ajoute au tableau dynamique args */
+  while (arg) {
+    args = realloc (args, sizeof (char*) * ++size);
+    args[size-1] = arg;
+    arg = strtok(NULL, " ");
+  }
+  float temp1 = -69 - atoi(args[2]);
+  float temp2 = 10 * _pow;
+  float temp3 = temp1/temp2;
+  float distance = pow(10,temp3);
+  printf("\ntemp1 is: %.1f\ntemp2 is: %.1f\ntemp3 is: %.1f\nDistance is: %.1f meters\n", temp1, temp2, temp3, distance);
+  /* Libere la memoire allouee */
+  free (args);
 }
 
 int main(int _argc, char **_argv) {
@@ -76,13 +100,14 @@ int main(int _argc, char **_argv) {
   char line[256];
   char* signature;
   char fullLine[256];
+  int pow = 2;
   while (fgets(line, sizeof(line), input)) {
     strcpy(fullLine, line);
     signature = getTransaction(line);
 
       if(strcmp(signature, "00") == 0) {
         printf("%s", "Identification entry: ");
-        strToId(fullLine);
+        pow = strToId(fullLine);
       } else if(strcmp(signature, "01") == 0) {
         printf("%s", "TemperatureH entry: ");
       } else if(strcmp(signature, "02") == 0) {
@@ -91,6 +116,7 @@ int main(int _argc, char **_argv) {
         printf("%s", "Pulsation entry: ");
       } else if(strcmp(signature, "04") == 0) {
         printf("%s", "RSSI entry: ");
+        strToRssi(fullLine, pow);
       } else if(strcmp(signature, "05") == 0) {
         printf("%s", "Data entry: ");
       } else {
