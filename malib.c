@@ -2,8 +2,7 @@
 #include "malib.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-Id* getIdentification(int _timestamp, int _signature, float _id, unsigned char _emetteurPow) {
+Id* getIdentification(size_t _timestamp, size_t _signature, float _id, unsigned char _emetteurPow) {
 
     if (_id == 0) {
         _id = 9999;
@@ -21,7 +20,7 @@ Id* getIdentification(int _timestamp, int _signature, float _id, unsigned char _
     return identification;
 }
 
-TemperatureH* getTemperatureH(int _timestamp, int _signature, float _temp, int _error) {
+TemperatureH* getTemperatureH(size_t _timestamp, size_t _signature, float _temp, int _error) {
     TemperatureH *tempH = malloc(sizeof(TemperatureH));
     tempH->timestamp = _timestamp;
     tempH->signature = _signature;
@@ -32,7 +31,7 @@ TemperatureH* getTemperatureH(int _timestamp, int _signature, float _temp, int _
     return tempH;
 }
 
-TemperatureA* getTemperatureA(int _timestamp, int _signature, float _temp, int _error) {
+TemperatureA* getTemperatureA(size_t _timestamp, size_t _signature, float _temp, int _error) {
     TemperatureA *tempA = malloc(sizeof(TemperatureA));
     tempA->timestamp = _timestamp;
     tempA->signature = _signature;
@@ -43,7 +42,7 @@ TemperatureA* getTemperatureA(int _timestamp, int _signature, float _temp, int _
     return tempA;
 }
 
-Pulsation* getPulsation(int _timestamp, int _signature, float _pulse, int _error) {
+Pulsation* getPulsation(size_t _timestamp, size_t _signature, float _pulse, int _error) {
     Pulsation *pulseParM =malloc(sizeof(Pulsation));
     pulseParM->timestamp = _timestamp;
     pulseParM->signature = _signature;
@@ -54,7 +53,7 @@ Pulsation* getPulsation(int _timestamp, int _signature, float _pulse, int _error
    return pulseParM;
 }
 
-EchangeDonnees* getEchangeDonnees(int _timestamp, int _signature, int _id, int _idpn []) {
+EchangeDonnees* getEchangeDonnees(size_t _timestamp, size_t _signature, size_t _id, size_t _idpn []) {
     EchangeDonnees *data = malloc(sizeof(EchangeDonnees));
     data->timestamp = _timestamp;
     data->signature = _signature;
@@ -63,7 +62,7 @@ EchangeDonnees* getEchangeDonnees(int _timestamp, int _signature, int _id, int _
     return data;
 }
 
-RssiSignal* getrssiSignal(int _timestamp, int _signature, signed short _signalRSSI, int _id) {
+RssiSignal* getrssiSignal(size_t _timestamp, size_t _signature, signed short _signalRSSI, size_t _id) {
     RssiSignal *rssi = malloc(sizeof(RssiSignal));
     rssi->timestamp = _timestamp;
     rssi->signature = _signature;

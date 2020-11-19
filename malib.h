@@ -1,60 +1,60 @@
 //malib.h
 #ifndef __MALIB_H__
 #define __MALIB_H__
-
+#include <stddef.h>
 
 typedef struct {
-int timestamp;
-int signature;
+size_t timestamp;
+size_t signature;
 float id;
 unsigned char  emetteurPow;
 }Id;
 
-Id* getIdentification(int _timestamp, int _signature, float _id, unsigned char _emetteurPow);
+Id* getIdentification(size_t _timestamp, size_t _signature, float _id, unsigned char _emetteurPow);
 
 typedef struct {
-int timestamp;
-int signature;
+size_t timestamp;
+size_t signature;
 float temp;
 int error; //0 = no error 1 = error
 }TemperatureH;
 
-TemperatureH* getTemperatureH(int _timestamp, int _signature, float _temp, int _error);
+TemperatureH* getTemperatureH(size_t _timestamp, size_t _signature, float _temp, int _error);
 
 typedef struct {
-int timestamp;
-int signature;
+size_t timestamp;
+size_t signature;
 float temp;
 int error; // 0 = no error 1 = error
 }TemperatureA;
 
-TemperatureA* getTemperatureA(int _timestamp, int _signature, float _temp, int _error);
+TemperatureA* getTemperatureA(size_t _timestamp, size_t _signature, float _temp, int _error);
 
 typedef struct {
-int timestamp;
-int signature;
+size_t timestamp;
+size_t signature;
 float pulse;
 int error; //0 = no error 1 = error
 }Pulsation;
 
-Pulsation* getPulsation(int _timestamp, int _signature, float _pulse, int _error);
+Pulsation* getPulsation(size_t _timestamp, size_t _signature, float _pulse, int _error);
 
 typedef struct {
-int timestamp;
-int signature;
+size_t timestamp;
+size_t signature;
 signed short signalRSSI;
-int id;
+size_t id;
 }RssiSignal;
 
-RssiSignal* getrssiSignal(int _timestamp, int _signature, signed short _signalRSSI, int _id);
+RssiSignal* getrssiSignal(size_t _timestamp, size_t _signature, signed short _signalRSSI, size_t _id);
 
 typedef struct {
-int timestamp;
-int signature;
-int id;
-int idpn [];
+size_t timestamp;
+size_t signature;
+size_t id;
+size_t idpn [];
 }EchangeDonnees;
 
-EchangeDonnees* getEchangeDonnees(int _timestamp, int _signature, int _id, int _idpn []);
+EchangeDonnees* getEchangeDonnees(size_t _timestamp, size_t _signature, size_t _id, size_t _idpn []);
 
 #endif
