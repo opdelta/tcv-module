@@ -40,7 +40,6 @@ jobs:
        # Runs a set of commands using the runners shell
       - name: testunitaires with liste.sh
         run: |
-          ./tp1
           ./tp1 > output.txt
           ./liste.sh output.txt
           rm -f output.txt
