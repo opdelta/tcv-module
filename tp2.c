@@ -4,15 +4,17 @@
 #include "malib.h"
 #include <math.h>
 #include <string.h>
-
-void printVersion() {
+#include <stddef.h>
+unsigned int printVersion() {
   version_t *v = malloc(sizeof(version_t));
   getVersion(v);
   printf("%s","version #: ");
   printf("%u.",v->major);
   printf("%u.",v->minor);
   printf("%u\n",v->build);
+  unsigned int versionBuild = v->build;
   free(v);
+  return versionBuild;
 }
 
 char* getTransaction(char _line[]) {
@@ -23,8 +25,8 @@ char* getTransaction(char _line[]) {
    return signature;
 }
 int strToId(char _line[]) {
-  int timestamp = 0;
-  int signature = 0;
+  size_t timestamp = 0;
+  size_t signature = 0;
   float id = 0;
   unsigned char pow = 0;
   char* arg = strtok(_line, " ");
@@ -42,12 +44,12 @@ int strToId(char _line[]) {
     {
       case 0:
         if (args[i] != NULL) {
-          timestamp = atoi(args[i]);
+          timestamp = (size_t)atoi(args[i]);
         }
         break;
       case 1:
         if (args[i] != NULL) {
-          signature = atoi(args[i]);
+          signature = (size_t)atoi(args[i]);
         }
         break;
       case 2:
@@ -64,7 +66,7 @@ int strToId(char _line[]) {
     ++i;
   }
   Id *ident = getIdentification(timestamp, signature, id, pow);
-  printf("\ntype: %d\ntimestamp: %d\nsignature: %02d\nid: %.0f\npower: %d\n", 10, ident->timestamp, ident->signature, ident->id, ident->emetteurPow);
+  printf("%d %zu %.0f %d\n", 10, ident->timestamp, ident->id, ident->emetteurPow);
   /* Libere la memoire allouee */
   free (args);
   free(ident);
@@ -78,56 +80,155 @@ float distanceCalc(signed short _signal, int _pow) {
   return distance;
 }
 void strToRssi(char _line[], int _pow) {
-  int timestamp = 0;
-  int signature = 0;
+  size_t timestamp = 0;
+  size_t signature = 0;
   signed short signal = -69;
-  int id = 0;
+  size_t id = 0;
   char* arg = strtok(_line, " ");
   char ** args = NULL;
   int size = 0;
+  int i = 0;
   /*Separe la ligne en tokens et les ajoute au tableau dynamique args */
   while (arg) {
     args = realloc (args, sizeof (char*) * ++size);
     args[size-1] = arg;
     arg = strtok(NULL, " ");
   }
-  signal = (signed short)atoi(args[2]);
+  while (i < size) {
+    switch(i)
+    {
+      case 0:
+        if (args[i] != NULL) {
+          timestamp = (size_t)atoi(args[i]);
+        }
+        break;
+      case 1:
+        if (args[i] != NULL) {
+          signature = (size_t)atoi(args[i]);
+        }
+        break;
+      case 2:
+        if (args[i] != NULL) {
+           signal = (signed short)atoi(args[i]);
+        }
+        break;
+      case 3:
+        if (args[i] != NULL) {
+          id = (size_t)atoi(args[i]);
+        }
+        break;
+    }
+    ++i;
+  }
+  
   float distance = distanceCalc(signal, _pow);
+
+  RssiSignal *rssi = getrssiSignal(timestamp, signature, signal, id);
+  printf("%d %zu %zu %.1f\n", 14, rssi->timestamp, rssi->id, distance);
   /* Libere la memoire allouee */
   free (args);
+  free(rssi);
+}
+float strToTemp(char _line[]) {
+  char* arg = strtok(_line, " ");
+  char ** args = NULL;
+  int size = 0;
+  float temp = 0;
+  /*Separe la ligne en tokens et les ajoute au tableau dynamique args */
+  while (arg) {
+    args = realloc (args, sizeof (char*) * ++size);
+    args[size-1] = arg;
+    arg = strtok(NULL, " ");
+  }
+  if (strlen(args[2]) > 6) {
+    temp = -999;
+  } else {
+    temp = atof(args[2]);
+  }
+  free(args);
+  return temp;
 }
 
+float average(float _fullTemp, int _count) {
+  float av = _fullTemp/_count;
+  return av;
+}
+
+void displayAverages(float _mTH, float _mTA, size_t _mPul) {
+  printf("%d %.1f %.1f %zu\n", 21, _mTH, _mTA, _mPul);
+}
+void displayInvalid(size_t _invTH, size_t _invTA, size_t _invPul) {
+  printf("%d %zu %zu %zu\n", 22, _invTH/3, _invTA/3, _invPul/3);
+}
 int main(int _argc, char **_argv) {
-  printVersion();
+  unsigned int ver = printVersion();
+  if (ver < 1003) {
+    int build = 0;
+  } else {
+    int build = 1;
+  }
   FILE *input = fopen(_argv[1], "r");
   char line[256];
   char* signature;
   char fullLine[256];
   int pow = 2;
+  int tempHCount = 0;
+  int tempACount = 0;
+  int pulseCount = 0;
+  size_t errHCount = 0;
+  size_t errACount = 0;
+  size_t errPCount = 0;
+  float fullTempH = 0;
+  float fullTempA = 0;
+  float fullPulse = 0;
   while (fgets(line, sizeof(line), input)) {
     strcpy(fullLine, line);
     signature = getTransaction(line);
 
-      if(strcmp(signature, "00") == 0) {
-        printf("%s", "Identification entry: ");
+      if(strcmp(signature, "00") == 0) { //Signature identification
         pow = strToId(fullLine);
-      } else if(strcmp(signature, "01") == 0) {
-        printf("%s", "TemperatureH entry: ");
-      } else if(strcmp(signature, "02") == 0) {
-        printf("%s", "TemperatureA entry: ");
-      } else if(strcmp(signature, "03") == 0) {
-        printf("%s", "Pulsation entry: ");
-      } else if(strcmp(signature, "04") == 0) {
-        printf("%s", "RSSI entry: ");
+      //End signature identification
+      } else if(strcmp(signature, "01") == 0) { //Signature temperatureH
+        float temp = strToTemp(fullLine);
+        if (temp == -999) {
+          errHCount++;
+        } else {
+          
+          tempHCount++;
+          fullTempH += temp;
+        }
+      //End signature TemperatureH
+      } else if(strcmp(signature, "02") == 0) { //Signature temperatureA
+        float temp = strToTemp(fullLine);
+        if (temp == -999) {
+          errACount++;
+        } else {
+          tempACount++;
+          fullTempA += temp;
+        }
+      //End signature temperatureA
+      } else if(strcmp(signature, "03") == 0) { //Signature pulsation
+        float temp = strToTemp(fullLine);
+        if (temp == -999) {
+          errPCount++;
+        } else {
+          pulseCount++;
+          fullPulse += temp;
+        }
+      //End signature pulsation
+      } else if(strcmp(signature, "04") == 0) { //Signature RSSI
         strToRssi(fullLine, pow);
-      } else if(strcmp(signature, "05") == 0) {
-        printf("%s", "Data entry: ");
+      //End signature RSSI
+      } else if(strcmp(signature, "05") == 0) { //Signature data
+      
+      //End signature data
       } else {
         printf("%s\n", "Nothing happened...");
         printf("%s", signature);
       }
-      printf("%s", fullLine);
-    }
+  }
+  displayAverages(fullTempH, fullTempA, fullPulse);
+  displayInvalid(errHCount, errACount, errPCount);
   fclose(input);
   return 0;
 }
