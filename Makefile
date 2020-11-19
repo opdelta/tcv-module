@@ -9,12 +9,13 @@ FILEURL = https://github.com/guyfrancoeur/INF3135_A2020/raw/master/tp/tp1.zip
 
 
 $(FILENAME2).o: $(FILENAME2).c
-	gcc  $(CFLAGS) -o $(FILENAME2) $(FILENAME2).c $(FILETARGET2) -lm
+	gcc $(CFLAGS) -o $(FILENAME2) $(FILENAME2).c $(FILETARGET2) -lm
 
 tp1: $(FILENAME).c
 	gcc $(CFLAGS) -o $(FILENAME) $(FILENAME).c $(FILETARGET).o -lcunit
 
 lib:
+	wget $(FILEURL) -P ./data
 	cd data; unzip $(FILENAME).zip -d ../;rm tp1.zip
 test-tp1a:
 	-./tp1
@@ -31,3 +32,4 @@ clean:
 	rm -f $(FILENAME) *.o tcv.h
 	rm -rf data
 	rm -rf *.gch
+	
