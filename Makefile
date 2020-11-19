@@ -12,21 +12,22 @@ $(FILENAME2).o: $(FILENAME2).c
 	gcc  $(CFLAGS) -o $(FILENAME2) $(FILENAME2).c $(FILETARGET2) -lm
 
 tp1: $(FILENAME).c
-    gcc $(CFLAGS) -o $(FILENAME) $(FILENAME).c $(FILETARGET).o -lcunit
+	gcc $(CFLAGS) -o $(FILENAME) $(FILENAME).c $(FILETARGET).o -lcunit
 
 lib:
-    cd data; unzip $(FILENAME).zip -d ../;rm tp1.zip
+	cd data; unzip $(FILENAME).zip -d ../;rm tp1.zip
 test-tp1a:
-    -./tp1
+	-./tp1
 
 test-tp1b:
-    -./tp1 > output.txt
-    -./liste.sh output.txt
-    rm -f output.txt
+	-./tp1 > output.txt
+	-./liste.sh output.txt
+	rm -f output.txt
 
 
 .PHONY: clean
 
 clean:
-    rm -f $(FILENAME) *.o tcv.h
-    rm -rf data
+	rm -f $(FILENAME) *.o tcv.h
+	rm -rf data
+	rm -rf *.gch
