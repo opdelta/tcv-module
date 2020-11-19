@@ -157,16 +157,65 @@ float average(float _fullTemp, int _count) {
 void displayAverages(float _mTH, float _mTA, size_t _mPul) {
   printf("%d %.1f %.1f %zu\n", 21, _mTH, _mTA, _mPul);
 }
-void displayInvalid(size_t _invTH, size_t _invTA, size_t _invPul) {
-  printf("%d %zu %zu %zu\n", 22, _invTH/3, _invTA/3, _invPul/3);
+void displayError(int _trans, size_t _invTH, size_t _invTA, size_t _invPul) {
+  printf("%d %zu %zu %zu\n", _trans, _invTH/3, _invTA/3, _invPul/3);
 }
+
+
+void strToData(char _line[]) {
+  char* arg = strtok(_line, " ");
+  char ** args = NULL;
+  int size = 0;
+  int i = 0;
+  size_t signature;
+  size_t timestamp;
+  size_t id;
+  
+  /*Separe la ligne en tokens et les ajoute au tableau dynamique args */
+  while (arg) {
+    args = realloc (args, sizeof (char*) * ++size);
+    args[size-1] = arg;
+    arg = strtok(NULL, " ");
+  }
+  while (i < size) {
+    switch(i)
+    {
+      case 0:
+        if (args[i] != NULL) {
+          timestamp = (size_t)atoi(args[i]);
+        }
+        break;
+      case 1:
+        if (args[i] != NULL) {
+          signature = (size_t)atoi(args[i]);
+        }
+        break;
+      case 2:
+        if (args[i] != NULL) {
+          id = (size_t)atoi(args[i]);
+        }
+        break;
+    }
+    ++i;
+  }
+  EchangeDonnees *data = getEchangeDonnees(timestamp, signature, id, NULL);
+  printf("%d %zu %zu %zu", 15, data->timestamp, data->signature, data->id);
+  for (int j = 3; j < size; ++j) {
+    printf(" %s", args[j]);
+  }
+  free(data);
+}
+
+
+
+
 int main(int _argc, char **_argv) {
   unsigned int ver = printVersion();
-  if (ver < 1003) {
-    int build = 0;
-  } else {
-    int build = 1;
+  int build = 0;
+  if (ver > 1003) {
+    build = 1;
   }
+
   FILE *input = fopen(_argv[1], "r");
   char line[256];
   char* signature;
@@ -178,6 +227,9 @@ int main(int _argc, char **_argv) {
   size_t errHCount = 0;
   size_t errACount = 0;
   size_t errPCount = 0;
+  size_t invHCount = 0;
+  size_t invACount = 0;
+  size_t invPCount = 0;
   float fullTempH = 0;
   float fullTempA = 0;
   float fullPulse = 0;
@@ -193,9 +245,13 @@ int main(int _argc, char **_argv) {
         if (temp == -999) {
           errHCount++;
         } else {
+          if (validerTH_1((int)temp) == 0) {
+            tempHCount++;
+            fullTempH += temp;
+          } else {
+            invHCount++;
+          }
           
-          tempHCount++;
-          fullTempH += temp;
         }
       //End signature TemperatureH
       } else if(strcmp(signature, "02") == 0) { //Signature temperatureA
@@ -203,8 +259,21 @@ int main(int _argc, char **_argv) {
         if (temp == -999) {
           errACount++;
         } else {
-          tempACount++;
-          fullTempA += temp;
+          if(build == 0) {
+            if (validerTA_3((short)temp)) {
+              tempACount++;
+              fullTempA += temp;
+            } else {
+              invACount++;
+            }
+          } else {
+            if (validerTA_1((int)temp)) {
+              tempACount++;
+              fullTempA += temp;
+            } else {
+              invACount++;
+            }
+          }
         }
       //End signature temperatureA
       } else if(strcmp(signature, "03") == 0) { //Signature pulsation
@@ -212,15 +281,21 @@ int main(int _argc, char **_argv) {
         if (temp == -999) {
           errPCount++;
         } else {
-          pulseCount++;
-          fullPulse += temp;
+          if (build == 0) {
+            if (validerPulsation_3((short)temp)) {
+              pulseCount++;
+              fullPulse += temp;
+            } else {
+              invPCount++;
+            }
+          }
         }
       //End signature pulsation
       } else if(strcmp(signature, "04") == 0) { //Signature RSSI
         strToRssi(fullLine, pow);
       //End signature RSSI
       } else if(strcmp(signature, "05") == 0) { //Signature data
-      
+        strToData(fullLine);
       //End signature data
       } else {
         printf("%s\n", "Nothing happened...");
@@ -228,7 +303,8 @@ int main(int _argc, char **_argv) {
       }
   }
   displayAverages(fullTempH, fullTempA, fullPulse);
-  displayInvalid(errHCount, errACount, errPCount);
+  displayError(22, errHCount, errACount, errPCount);
+  displayError(23, invHCount, invACount, invPCount);
   fclose(input);
   return 0;
 }
