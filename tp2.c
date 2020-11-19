@@ -5,6 +5,8 @@
 #include <math.h>
 #include <string.h>
 #include <stddef.h>
+
+#define BUFFER_SIZE 1000
 unsigned int printVersion() {
   version_t *v = malloc(sizeof(version_t));
   getVersion(v);
@@ -18,8 +20,10 @@ unsigned int printVersion() {
 }
 
 char* getTransaction(char _line[]) {
-   char* signature = strtok(_line, " ");
+   char *signature;
+   signature = calloc(BUFFER_SIZE, sizeof(char));
    if (_line != NULL) {
+    signature = strtok(_line, " ");
     signature = strtok(NULL," ");
    }
    return signature;
@@ -215,11 +219,9 @@ int main(int _argc, char **_argv) {
   if (ver > 1003) {
     build = 1;
   }
-
-  FILE *input = fopen(_argv[1], "r");
-  char line[256];
+  char line[BUFFER_SIZE];
   char* signature;
-  char fullLine[256];
+  char fullLine[BUFFER_SIZE];
   int pow = 2;
   int tempHCount = 0;
   int tempACount = 0;
@@ -233,78 +235,80 @@ int main(int _argc, char **_argv) {
   float fullTempH = 0;
   float fullTempA = 0;
   float fullPulse = 0;
-  while (fgets(line, sizeof(line), input)) {
-    strcpy(fullLine, line);
-    signature = getTransaction(line);
-
-      if(strcmp(signature, "00") == 0) { //Signature identification
-        pow = strToId(fullLine);
-      //End signature identification
-      } else if(strcmp(signature, "01") == 0) { //Signature temperatureH
-        float temp = strToTemp(fullLine);
-        if (temp == -999) {
-          errHCount++;
-        } else {
-          if (validerTH_1((int)temp) == 0) {
-            tempHCount++;
-            fullTempH += temp;
-          } else {
-            invHCount++;
-          }
-          
-        }
-      //End signature TemperatureH
-      } else if(strcmp(signature, "02") == 0) { //Signature temperatureA
-        float temp = strToTemp(fullLine);
-        if (temp == -999) {
-          errACount++;
-        } else {
-          if(build == 0) {
-            if (validerTA_3((short)temp)) {
-              tempACount++;
-              fullTempA += temp;
-            } else {
-              invACount++;
-            }
-          } else {
-            if (validerTA_1((int)temp)) {
-              tempACount++;
-              fullTempA += temp;
-            } else {
-              invACount++;
-            }
-          }
-        }
-      //End signature temperatureA
-      } else if(strcmp(signature, "03") == 0) { //Signature pulsation
-        float temp = strToTemp(fullLine);
-        if (temp == -999) {
-          errPCount++;
-        } else {
-          if (build == 0) {
-            if (validerPulsation_3((short)temp)) {
-              pulseCount++;
-              fullPulse += temp;
-            } else {
-              invPCount++;
-            }
-          }
-        }
-      //End signature pulsation
-      } else if(strcmp(signature, "04") == 0) { //Signature RSSI
-        strToRssi(fullLine, pow);
-      //End signature RSSI
-      } else if(strcmp(signature, "05") == 0) { //Signature data
-        strToData(fullLine);
-      //End signature data
+  signature = calloc(BUFFER_SIZE, sizeof(char));
+  while (fgets(line, BUFFER_SIZE, stdin) != NULL) {
+      if (line != NULL) {
+        strcpy(fullLine, line);
+        signature = getTransaction(line);
       } else {
-        printf("%s\n", "Nothing happened...");
-        printf("%s", signature);
+        break;
+      }
+      if (signature != NULL) {
+        if(strcmp(signature, "00") == 0) { //Signature identification
+          pow = strToId(fullLine);
+        //End signature identification
+        } else if(strcmp(signature, "01") == 0) { //Signature temperatureH
+          float temp = strToTemp(fullLine);
+          if (temp == -999) {
+            errHCount++;
+          } else {
+            if (validerTH_1((int)temp) == 0) {
+              tempHCount++;
+              fullTempH += temp;
+            } else {
+              invHCount++;
+            }
+            
+          }
+        //End signature TemperatureH
+        } else if(strcmp(signature, "02") == 0) { //Signature temperatureA
+          float temp = strToTemp(fullLine);
+          if (temp == -999) {
+            errACount++;
+          } else {
+            if(build == 0) {
+              if (validerTA_3((short)temp)) {
+                tempACount++;
+                fullTempA += temp;
+              } else {
+                invACount++;
+              }
+            } else {
+              if (validerTA_1((int)temp)) {
+                tempACount++;
+                fullTempA += temp;
+              } else {
+                invACount++;
+              }
+            }
+          }
+        //End signature temperatureA
+        } else if(strcmp(signature, "03") == 0) { //Signature pulsation
+          float temp = strToTemp(fullLine);
+          if (temp == -999) {
+            errPCount++;
+          } else {
+            if (build == 0) {
+              if (validerPulsation_3((short)temp)) {
+                pulseCount++;
+                fullPulse += temp;
+              } else {
+                invPCount++;
+              }
+            }
+          }
+        //End signature pulsation
+        } else if(strcmp(signature, "04") == 0) { //Signature RSSI
+          strToRssi(fullLine, pow);
+        //End signature RSSI
+        } else if(strcmp(signature, "05") == 0) { //Signature data
+          strToData(fullLine);
+        //End signature data
+        }
       }
   }
   displayAverages(fullTempH, fullTempA, fullPulse);
   displayError(22, errHCount, errACount, errPCount);
   displayError(23, invHCount, invACount, invPCount);
-  fclose(input);
   return 0;
 }
