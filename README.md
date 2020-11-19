@@ -1,4 +1,4 @@
-# Travail pratique 1
+# Travail pratique 2
 
    ## Description
 
@@ -13,17 +13,26 @@
 
    ## Fonctionnement
    
-Il faut d'abord récupérer le projet dans la branche ```testunitaire```. Une fois récupéré, il suffit de lancer les commandes suivantes en ordre:
+Il faut d'abord récupérer le projet. Une fois récupéré, il suffit de lancer les commandes suivantes:
 
 - La première commande est ```make lib```. Cette commande permet d'initialiser le dossier avec les fichiers nécessaires.
 
 - Ensuite, il faut exécuter la commande ```make```. Cette commande permet de compiler le programme et créer un exécutable.
 
-- Finalement, il suffit de lancer la commande ```make test```. Les tests unitaires devraient s'exécuter et afficher à l'écran un ensemble de tests réussis et échoués.
+- l'exécutable tp2 prend en entrée standard des transactions et retourne en sortie standard des résultats. 
 
-   ## Contenu du projet dans la branche ```testunitaire```
+   ```bash
+      $ cat file.dat | ./tp2
 
-```tp1.c``` Le code source des tests unitaires pour les méthodes fournis du programme TCV.
+      $ ./script.sh | ./tp2
+
+      $ head -n 100 file.txt | ./tp2
+      ...
+   ```
+- 
+   ## Contenu du projet
+
+```tp2.c``` Le code source du tp2.
 
 ```MakeFile``` Fichier pour l'automatisation des commandes. Voici les cibles:
 
@@ -31,15 +40,21 @@ Il faut d'abord récupérer le projet dans la branche ```testunitaire```. Une fo
 
    - ```make clean``` nettoie le dossier pour garder que le nécessaire.
    
-   - ```make``` compile le programme TP1.c pour créer un exécutable.
+   - ```make``` compile le programme tp2.c pour créer un exécutable.
    
-   - ```make test``` lance les tests unitaires et affiche à l'écran uniquement les tests qui réussissent.
+   - ```make test-tp1a``` lance les tests unitaires et affiche tout à l'écran.
+
+   - ```make test-tp1b``` lance les tests unitaires et affiche les tests qui passent à l'écran.
    
+   - ```make test-tp2``` lance le programme principal et prend en stdin les transactions et retourne en stdout les résultats.
+
    - ```cp.txt```  contient le nom et le code permanent de l'auteur.
 
    - ```.gitignore``` contient une liste de tous les fichiers à ignorer par Git. (Template utilisé: GitHub)
 
    - ```README.md``` Contient les informations du répertoire courant.
+
+   - ```.github/workflows/tp2.yml``` Contient le fichier yaml pour l'automatisation des tests.
 
    ## Références
 
@@ -66,24 +81,30 @@ validerSignal_2
    Au moins une fonction de chaque passe, ce qui pourrait être essentiel lors de la suite du développement.
    
    Chaque test cherchait à valider les bornes des fonctions, une valeur en plein milieu des bornes et des valeurs à l'extrême. Donc pour chaque test, il y avait à peu près 6 asserts.
-   
-   ## Réponse
-   
-   ```Q1:``` Les ordinateurs fonctionne en base de 2 (0 et 1). Un système binaire est plus facile à traiter pour un ordinateur que les coder en base 10. Les décimales sont nocives simplement, car le temps necéssaire pour traiter une valeur décimale en BCD (Binary-coded decimal). Il fonctionne en transformant des séquences binaires de manière à pouvoir être interprêté en base 10 et décimales.
-   
-   ```Q2:``` Les types de données dont importantes à respecter, car dans le cas contraire, on se retrouve avec un overflow (une surcharge) et des valeurs non voulues peuvent être représentés. Un type de donnée qui supporte que des valeurs de -127 à 127 peut agir de manière non voulue lorsqu'on ne respecte pas son type et qu'on lui passe en paramètre un nombre plus gros ou plus petit. 
-   
-   ## Autoévaluation
-   
 
-| Critère | Sous-critère | Points |
-| ------- |:------------ | ------:|
-| Fonctionnabilité  | tests seront lancés (comparaison binaire)      | 3.0 |
-| Bash              | script qui liste les fonctions parfaites       | 0.5 |
-| Compilation       | sans avertissement ni erreur                   | 1.0 |
-| Récupération      | récupération sans problème et dépôt privée     | 1.0 |
-| Branche (git)     | nommée testunitaire (branche de développement) | 1.0 |
-| Makefile          | <ul><li>make</li><li>make clean</li><li>make lib</li><li>make test</li></ul> | <ul><li>0.5</li><li>0.5</li><li>0.5</li><li>0.25</li></ul> |
-| Markdown          | README.md                                      | 0.5 |
-| Professionnel     | :wink: (simple et sans mystère)                | 0.5 |
-| **Total**         |                                                | 9.25  |
+Pour le TP2, le projet est complété. Mon livrable prend en considération l'entrée standard que ce soit un fichier fourni en argument ou directement lancé et va analyser chacune des lignes et traiter les commandes. J'ai été en mesure de faire les allocations de mémoire necéssaires pour que les lignes soient lues comme il faut en utilisant par moment un BUFFER_SIZE afin de d'éviter des allocations en trop. Voici le résultat de valgrind lorsqu'on utilise l'entrée fournie dans l'énoncé du TP.
+
+```bash
+   version #: 0.1.1002
+   ==3084903== Memcheck, a memory error detector
+   ==3084903== Copyright (C) 2002-2017, and GNU GPL\'d, by Julian Seward et al.
+   ==3084903== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+   ==3084903== Command: cat in.txt
+   ==3084903==
+   10 0 1000 3
+   14 17599 1929292 3.4
+   14 19012 1929298 0.1
+   15 19511 5 1929298 100123 100987
+   21 38.2 -10.2 157
+   22 0 0 0
+   23 0 0 0
+   ==3084903==
+   ==3084903== HEAP SUMMARY:
+   ==3084903==     in use at exit: 0 bytes in 0 blocks
+   ==3084903==   total heap usage: 31 allocs, 31 frees, 1,056,736 bytes allocated
+   ==3084903==
+   ==3084903== All heap blocks were freed -- no leaks are possible
+   ==3084903==
+   ==3084903== For lists of detected and suppressed errors, rerun with: -s
+   ==3084903== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+```
