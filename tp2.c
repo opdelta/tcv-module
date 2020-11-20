@@ -48,7 +48,7 @@ char* getTransaction(char _line[]) {
 * @param _line Chaine de caractere a extraire.
 * @return La puissance de l'emetteur de la pastille.
 **/
-int strToId(char _line[]) {
+Id* strToId(char _line[]) {
   size_t timestamp = 0;
   size_t signature = 0;
   float id = 0;
@@ -93,8 +93,7 @@ int strToId(char _line[]) {
   printf("%d %zu %.0f %d\n", 10, ident->timestamp, ident->id, ident->emetteurPow);
   /* Libere la memoire allouee */
   free (args);
-  free(ident);
-  return pow;
+  return ident;
 }
 /**
 *
@@ -111,7 +110,7 @@ float distanceCalc(signed short _signal, int _pow) {
   float distance = pow(10,temp3);
   return distance;
 }
-void strToRssi(char _line[], int _pow) {
+size_t strToRssi(char _line[], int _pow) {
   size_t timestamp = 0;
   size_t signature = 0;
   signed short signal = -69;
@@ -120,6 +119,7 @@ void strToRssi(char _line[], int _pow) {
   char ** args = NULL;
   int size = 0;
   int i = 0;
+  size_t ids = 0;
   /*Separe la ligne en tokens et les ajoute au tableau dynamique args */
   while (arg) {
     args = realloc (args, sizeof (char*) * ++size);
@@ -147,6 +147,7 @@ void strToRssi(char _line[], int _pow) {
       case 3: //id
         if (args[i] != NULL) {
           id = (size_t)atoi(args[i]);
+          ids = id;
         }
         break;
     }
@@ -157,9 +158,11 @@ void strToRssi(char _line[], int _pow) {
 
   RssiSignal *rssi = getrssiSignal(timestamp, signature, signal, id);
   printf("%d %zu %zu %.1f\n", 14, rssi->timestamp, rssi->id, distance);
+  
   /* Libere la memoire allouee */
   free (args);
   free(rssi);
+  return ids;
 }
 /**
 *
@@ -235,7 +238,7 @@ void displayError(int _trans, size_t _invTH, size_t _invTA, size_t _invPul) {
 * @param _line Ligne contenant les informations d'echanges
 *
 **/
-void strToData(char _line[]) {
+void strToData(char _line[], Id* _ident, size_t _idpn[]) {
   char* arg = strtok(_line, " ");
   char ** args = NULL;
   int size = 0;
@@ -272,9 +275,9 @@ void strToData(char _line[]) {
     ++i;
   }
   EchangeDonnees *data = getEchangeDonnees(timestamp, signature, id, NULL);
-  printf("%d %zu %zu %zu", 15, data->timestamp, data->signature, data->id);
-  for (int j = 3; j < size; ++j) {
-    printf(" %s", args[j]);
+  printf("%d %zu %zu", 15, data->timestamp, (size_t)_ident->id);
+  for (int j = 0; j < 2; ++j) {
+    printf(" %ld", _idpn[j]);
   }
 /*Libere l'allocation de memoire pour les donnees*/
   free(data);
@@ -291,6 +294,7 @@ int main(int _argc, char **_argv) {
   char line[BUFFER_SIZE];
   char* signature;
   char fullLine[BUFFER_SIZE];
+  Id* ident;
   int pow = 2;
   int tempHCount = 0;
   int tempACount = 0;
@@ -304,6 +308,8 @@ int main(int _argc, char **_argv) {
   float fullTempH = 0;
   float fullTempA = 0;
   float fullPulse = 0;
+  int nbIdpn = 0;
+  size_t idpn[2];
   signature = calloc(BUFFER_SIZE, sizeof(char));
   while (fgets(line, BUFFER_SIZE, stdin) != NULL) {
       if (line != NULL) {
@@ -314,7 +320,8 @@ int main(int _argc, char **_argv) {
       }
       if (signature != NULL) {
         if(strcmp(signature, "00") == 0) { //Signature identification
-          pow = strToId(fullLine);
+          ident = strToId(fullLine);
+          pow = ident->emetteurPow;
         //End signature identification
         } else if(strcmp(signature, "01") == 0) { //Signature temperatureH
           float temp = strToTemp(fullLine);
@@ -375,16 +382,20 @@ int main(int _argc, char **_argv) {
           }
         //End signature pulsation
         } else if(strcmp(signature, "04") == 0) { //Signature RSSI
-          strToRssi(fullLine, pow);
+          idpn[nbIdpn] = strToRssi(fullLine, pow);
+          ++nbIdpn;
+
         //End signature RSSI
         } else if(strcmp(signature, "05") == 0) { //Signature data
-          strToData(fullLine);
+          strToData(fullLine, ident, idpn);
         //End signature data
         }
       }
   }
+  printf("%s","\n");
   displayAverages(fullTempH, fullTempA, fullPulse);
   displayError(22, errHCount, errACount, errPCount);
   displayError(23, invHCount, invACount, invPCount);
+  free(ident);
   return 0;
 }
