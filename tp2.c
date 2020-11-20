@@ -6,19 +6,30 @@
 #include <string.h>
 #include <stddef.h>
 
-#define BUFFER_SIZE 1000
+#define BUFFER_SIZE 1000 //Buffer pour une ligne lue
+
+/**
+*
+* Methode pour imprimer la version courante de la libraire
+*
+**/
 unsigned int printVersion() {
   version_t *v = malloc(sizeof(version_t));
   getVersion(v);
   printf("%s","version #: ");
   printf("%u.",v->major);
   printf("%u.",v->minor);
-  printf("%u\n",v->build);
+printf("%u\n",v->build);
   unsigned int versionBuild = v->build;
   free(v);
   return versionBuild;
 }
-
+/**
+*
+* Methode pour retourner la signature de la ligne fournie en parametre.
+*
+* @param _line Chaine de caracteres a extraire.
+**/
 char* getTransaction(char _line[]) {
    char *signature;
    signature = calloc(BUFFER_SIZE, sizeof(char));
@@ -28,6 +39,15 @@ char* getTransaction(char _line[]) {
    }
    return signature;
 }
+/**
+*
+* Methode principale pour la gestion de l'identification.
+* Alloue un espace memoire pour l'id et affiche a l'ecran les informations
+* de l'identifiant de la pastille.
+*
+* @param _line Chaine de caractere a extraire.
+* @return La puissance de l'emetteur de la pastille.
+**/
 int strToId(char _line[]) {
   size_t timestamp = 0;
   size_t signature = 0;
@@ -46,22 +66,22 @@ int strToId(char _line[]) {
   while (i < size) {
     switch(i)
     {
-      case 0:
+      case 0: //timestamp
         if (args[i] != NULL) {
           timestamp = (size_t)atoi(args[i]);
         }
         break;
-      case 1:
+      case 1: //signature
         if (args[i] != NULL) {
           signature = (size_t)atoi(args[i]);
         }
         break;
-      case 2:
+      case 2: //id
         if (args[i] != NULL) {
           id = atof(args[i]);
         }
         break;
-      case 3:
+      case 3: //puissance emetteur
         if (args[i] != NULL) {
           pow = (unsigned char)strtol(args[i],NULL,10);
         }
@@ -76,6 +96,14 @@ int strToId(char _line[]) {
   free(ident);
   return pow;
 }
+/**
+*
+* Methode pour le calcul de la distance entre deux recepteurs.
+*
+* @param _signal le signal entre deux pastilles
+* @param _pow Puissance de l'emetteur
+*
+**/
 float distanceCalc(signed short _signal, int _pow) {
   float temp1 = -69 - _signal;
   float temp2 = 10 * _pow;
@@ -101,22 +129,22 @@ void strToRssi(char _line[], int _pow) {
   while (i < size) {
     switch(i)
     {
-      case 0:
+      case 0: //timestamp
         if (args[i] != NULL) {
           timestamp = (size_t)atoi(args[i]);
         }
         break;
-      case 1:
+      case 1: //signature
         if (args[i] != NULL) {
           signature = (size_t)atoi(args[i]);
         }
         break;
-      case 2:
+      case 2: //signal
         if (args[i] != NULL) {
            signal = (signed short)atoi(args[i]);
         }
         break;
-      case 3:
+      case 3: //id
         if (args[i] != NULL) {
           id = (size_t)atoi(args[i]);
         }
@@ -133,6 +161,15 @@ void strToRssi(char _line[], int _pow) {
   free (args);
   free(rssi);
 }
+/**
+*
+* Methode de gestion des temperatures humaines, ambiantes et les pulsations.
+* N'affiche rien a l'ecran, mais retourne les temperatures/pulsations trouvees.
+*
+* @param _line Ligne a traiter contenant les informations de temperature ou de pulsation
+* @return Un float contenant la temperature ou la pulsation trouvee.
+*
+**/
 float strToTemp(char _line[]) {
   char* arg = strtok(_line, " ");
   char ** args = NULL;
@@ -144,7 +181,7 @@ float strToTemp(char _line[]) {
     args[size-1] = arg;
     arg = strtok(NULL, " ");
   }
-  if (strlen(args[2]) > 6) {
+  if (strlen(args[2]) > 6) { //Si l'argument 2 est "ERREUR"
     temp = -999;
   } else {
     temp = atof(args[2]);
@@ -152,20 +189,52 @@ float strToTemp(char _line[]) {
   free(args);
   return temp;
 }
+/**
+*
+* Methode qui calcule la moyenne.
+*
+* @param _fullTemp La somme de tous les elements
+* @param _count Le nombre total d'elements
+* @return La moyenne en float
+*
+**/
 
 float average(float _fullTemp, int _count) {
   float av = _fullTemp/_count;
   return av;
 }
-
+/**
+*
+* Methode qui affiche les moyennes des temperatures humaines et ambiantes ainsi que la pulsation.
+*
+* @param _mTH Moyenne des temperatures humaines
+* @param _mTA Moyenne des temperatures ambiantes
+* @param _mPul Moyenne des pulsations
+**/
 void displayAverages(float _mTH, float _mTA, size_t _mPul) {
   printf("%d %.1f %.1f %zu\n", 21, _mTH, _mTA, _mPul);
 }
+/**
+*
+* Methode qui affiche le nombre d'entrees invalides de temperature humaines et ambiante ainsi que le pulsation.
+*
+* @param _trans Numero de transaction a afficher
+* @param _invTH Nombre de temperature humaine invalides
+* @param _invTA Nombre de temperature ambiante invalides
+* @param _invPul NOmbre de pulsations invalides
+*/
 void displayError(int _trans, size_t _invTH, size_t _invTA, size_t _invPul) {
   printf("%d %zu %zu %zu\n", _trans, _invTH/3, _invTA/3, _invPul/3);
 }
 
-
+/**
+*
+* Methode principale pour la gestion des contacts des pastilles (les echanges de donnees).
+* La methode affiche a l'ecran les donnees echangees.
+*
+* @param _line Ligne contenant les informations d'echanges
+*
+**/
 void strToData(char _line[]) {
   char* arg = strtok(_line, " ");
   char ** args = NULL;
@@ -184,17 +253,17 @@ void strToData(char _line[]) {
   while (i < size) {
     switch(i)
     {
-      case 0:
+      case 0: //timestamp
         if (args[i] != NULL) {
           timestamp = (size_t)atoi(args[i]);
         }
         break;
-      case 1:
+      case 1: //signature
         if (args[i] != NULL) {
           signature = (size_t)atoi(args[i]);
         }
         break;
-      case 2:
+      case 2: //id
         if (args[i] != NULL) {
           id = (size_t)atoi(args[i]);
         }
@@ -207,9 +276,9 @@ void strToData(char _line[]) {
   for (int j = 3; j < size; ++j) {
     printf(" %s", args[j]);
   }
+/*Libere l'allocation de memoire pour les donnees*/
   free(data);
 }
-
 
 
 
@@ -296,13 +365,13 @@ int main(int _argc, char **_argv) {
                 invPCount++;
               }
             } else {
-              if (validerPulsation_1((int)temp) == 0) {
-                pulseCount++;
-                fullPulse += temp;
-              } else {
-                invPCount++;
-              } 
-            } 
+               if(validerPulsation_1((int)temp) == 0) {
+                   pulseCount++;
+                   fullPulse+=temp;
+                } else {
+                  invPCount++;
+                }
+            }
           }
         //End signature pulsation
         } else if(strcmp(signature, "04") == 0) { //Signature RSSI
