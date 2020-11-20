@@ -31,7 +31,6 @@ jobs:
           sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev
           wget https://github.com/guyfrancoeur/INF3135_A2020/raw/master/tp/tp1.zip -P ./data
           cd data; unzip tp1.zip -d ../;rm tp1.zip
-          ls -a
           
 
       # Runs a set of commands using the runners shell
@@ -39,6 +38,7 @@ jobs:
         run: |
           gcc -Wall -Werror=vla -pedantic -std=c11 -I/usr/include/CUnit -L/usr/lib/x86_64-linux-gnu -o tp2 tp2.c tcv.o malib.h malib.c -lm
           gcc -Wall -Werror=vla -pedantic -std=c11 -I/usr/include/CUnit -L/usr/lib/x86_64-linux-gnu -o tp1 tp1.c tcv.o -lcunit
+          chmod +x liste.sh
        # Runs a set of commands using the runners shell
       - name: testunitaires with liste.sh
         run: |
