@@ -31,6 +31,7 @@ jobs:
           sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev
           wget https://github.com/guyfrancoeur/INF3135_A2020/raw/master/tp/tp1.zip -P ./data
           cd data; unzip tp1.zip -d ../;rm tp1.zip
+          chmod +x liste.sh
 
       # Runs a set of commands using the runners shell
       - name: Compilation
