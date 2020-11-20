@@ -17,7 +17,8 @@ $(FILENAME): $(FILENAME).c
 lib:
 	wget $(FILEURL) -P ./data
 	cd data; unzip $(FILENAME).zip -d ../;rm tp1.zip
-	test-tp1a:
+	
+test-tp1a:
 			-./tp1
 
 test-tp1b:
