@@ -267,14 +267,14 @@ int main(int _argc, char **_argv) {
             errACount++;
           } else {
             if(build == 0) {
-              if (validerTA_3((short)temp)) {
+              if (validerTA_3((short)temp) == 0) {
                 tempACount++;
                 fullTempA += temp;
               } else {
                 invACount++;
               }
             } else {
-              if (validerTA_1((int)temp)) {
+              if (validerTA_1((int)temp) == 0) {
                 tempACount++;
                 fullTempA += temp;
               } else {
@@ -289,13 +289,20 @@ int main(int _argc, char **_argv) {
             errPCount++;
           } else {
             if (build == 0) {
-              if (validerPulsation_3((short)temp)) {
+              if (validerPulsation_3((short)temp) == 0) {
                 pulseCount++;
                 fullPulse += temp;
               } else {
                 invPCount++;
               }
-            }
+            } else {
+              if (validerPulsation_1((int)temp) == 0) {
+                pulseCount++;
+                fullPulse += temp;
+              } else {
+                invPCount++;
+              } 
+            } 
           }
         //End signature pulsation
         } else if(strcmp(signature, "04") == 0) { //Signature RSSI
