@@ -328,11 +328,20 @@ int main(int _argc, char **_argv) {
           if (temp == -999) {
             errHCount++;
           } else {
-            if (validerTH_1((int)temp)) {
+            if (temp < 100) {
+              if (validerTH_1((int)temp*10)) {
               tempHCount++;
               fullTempH += temp;
+              } else {
+                invHCount++;
+              }
             } else {
+              if (validerTH_1((int)temp)) {
+                tempHCount++;
+                fullTempH += temp;
+              } else {
               invHCount++;
+              }
             }
             
           }
