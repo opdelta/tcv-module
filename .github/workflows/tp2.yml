@@ -43,7 +43,7 @@ jobs:
         run: |
           cat test/in.txt | ./tp2 > out.txt
           cat test/in2.dat | ./tp2
-          echo -e "version #: 0.1.10005\n10 0 1000 3\n14 17599 1929292 3.4\n14 19012 1929298 0.1\n15 19511 1000 1929292 1929298\n21 38.2 -10.2 157\n22 0 0 0\n23 0 0 0" > result.txt
+          echo -e "version #: 0.1.1002\n10 0 1000 3\n14 17599 1929292 3.4\n14 19012 1929298 0.1\n15 19511 1000 1929292 1929298\n21 38.2 -10.2 157\n22 0 0 0\n23 0 0 0" > result.txt
           
       - name: Differences
         run: diff out.txt result.txt
