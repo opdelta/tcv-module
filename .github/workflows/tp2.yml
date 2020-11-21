@@ -28,6 +28,7 @@ jobs:
       # Runs a single command using the runners shell sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev
       - name: Setup workspace
         run: |
+          sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev
           wget https://github.com/guyfrancoeur/INF3135_A2020/raw/master/tp/tp1.zip -P ./data
           cd data; unzip tp1.zip -d ../;rm tp1.zip
           
