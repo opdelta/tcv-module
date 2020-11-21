@@ -5,7 +5,7 @@
 #include <math.h>
 #include <string.h>
 #include <stddef.h>
-
+#include <stdbool.h>
 #define BUFFER_SIZE 1000 //Buffer pour une ligne lue
 
 /**
@@ -328,7 +328,7 @@ int main(int _argc, char **_argv) {
           if (temp == -999) {
             errHCount++;
           } else {
-            if (validerTH_1((int)temp) == 0) {
+            if (validerTH_1((int)temp)) {
               tempHCount++;
               fullTempH += temp;
             } else {
@@ -343,14 +343,14 @@ int main(int _argc, char **_argv) {
             errACount++;
           } else {
             if(build == 0) {
-              if (validerTA_3((short)temp) == 0) {
+              if (validerTA_3((short)temp)) {
                 tempACount++;
                 fullTempA += temp;
               } else {
                 invACount++;
               }
             } else {
-              if (validerTA_1((int)temp) == 0) {
+              if (validerTA_1((int)temp)) {
                 tempACount++;
                 fullTempA += temp;
               } else {
@@ -365,14 +365,14 @@ int main(int _argc, char **_argv) {
             errPCount++;
           } else {
             if (build == 0) {
-              if (validerPulsation_3((short)temp) == 0) {
+              if (validerPulsation_3((short)temp)) {
                 pulseCount++;
                 fullPulse += temp;
               } else {
                 invPCount++;
               }
             } else {
-               if(validerPulsation_1((int)temp) == 0) {
+               if(validerPulsation_1((int)temp)) {
                    pulseCount++;
                    fullPulse+=temp;
                 } else {
@@ -395,7 +395,7 @@ int main(int _argc, char **_argv) {
   printf("%s","\n");
   displayAverages(fullTempH, fullTempA, fullPulse);
   displayError(22, errHCount, errACount, errPCount);
-  displayError(23, invHCount, invACount, invPCount);
+  printf("%d %zu %zu %zu\n", 23, invHCount, invACount, invPCount);
   free(ident);
   return 0;
 }
