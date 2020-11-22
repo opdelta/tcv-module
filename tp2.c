@@ -7,7 +7,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #define BUFFER_SIZE 1000 //Buffer pour une ligne lue
-
+size_t lastStamp = 0;
 /**
 *
 * Methode pour imprimer la version courante de la libraire
@@ -90,7 +90,10 @@ Id* strToId(char _line[]) {
     ++i;
   }
   Id *ident = getIdentification(timestamp, signature, id, pow);
-  printf("%d %zu %.0f %d\n", 10, ident->timestamp, ident->id, ident->emetteurPow);
+  if (timestamp >= lastStamp) {
+    printf("%d %zu %.0f %d\n", 10, ident->timestamp, ident->id, ident->emetteurPow);
+    lastStamp = timestamp;
+  }
   /* Libere la memoire allouee */
   free (args);
   return ident;
@@ -155,10 +158,11 @@ size_t strToRssi(char _line[], int _pow) {
   }
   
   float distance = distanceCalc(signal, _pow);
-
   RssiSignal *rssi = getrssiSignal(timestamp, signature, signal, id);
-  printf("%d %zu %zu %.1f\n", 14, rssi->timestamp, rssi->id, distance);
-  
+  if (timestamp >= lastStamp) {
+    printf("%d %zu %zu %.1f\n", 14, rssi->timestamp, rssi->id, distance);
+    lastStamp = timestamp;
+  }
   /* Libere la memoire allouee */
   free (args);
   free(rssi);
@@ -188,6 +192,9 @@ float strToTemp(char _line[]) {
     temp = -999;
   } else {
     temp = atof(args[2]);
+  }
+  if ((size_t)atoi(args[0]) < lastStamp) {
+    temp = -1000;
   }
   free(args);
   return temp;
@@ -275,10 +282,14 @@ void strToData(char _line[], Id* _ident, size_t _idpn[]) {
     ++i;
   }
   EchangeDonnees *data = getEchangeDonnees(timestamp, signature, id, NULL);
-  printf("%d %zu %zu", 15, data->timestamp, (size_t)_ident->id);
-  for (int j = 0; j < 2; ++j) {
-    printf(" %ld", _idpn[j]);
+  if (lastStamp >= timestamp) {
+    printf("%d %zu %zu", 15, data->timestamp, (size_t)_ident->id);
+    for (int j = 0; j < 2; ++j) {
+      printf(" %ld", _idpn[j]);
+    }
+    lastStamp = timestamp;
   }
+  
 /*Libere l'allocation de memoire pour les donnees*/
   free(data);
 }
@@ -327,7 +338,7 @@ int main(int _argc, char **_argv) {
           float temp = strToTemp(fullLine);
           if (temp == -999) {
             errHCount++;
-          } else {
+          } else if (temp != -1000) {
             if (temp < 100) {
               if (validerTH_1((int)temp*10)) {
               tempHCount++;
@@ -350,7 +361,7 @@ int main(int _argc, char **_argv) {
           float temp = strToTemp(fullLine);
           if (temp == -999) {
             errACount++;
-          } else {
+          } else if (temp != -1000) {
             if(build == 0) {
               if (validerTA_3((short)temp)) {
                 tempACount++;
@@ -372,7 +383,7 @@ int main(int _argc, char **_argv) {
           float temp = strToTemp(fullLine);
           if (temp == -999) {
             errPCount++;
-          } else {
+          } else if (temp != -1000) {
             if (build == 0) {
               if (validerPulsation_3((short)temp)) {
                 pulseCount++;
@@ -401,7 +412,6 @@ int main(int _argc, char **_argv) {
         }
       }
   }
-  printf("%s","\n");
   displayAverages(fullTempH, fullTempA, fullPulse);
   displayError(22, errHCount, errACount, errPCount);
   printf("%d %zu %zu %zu\n", 23, invHCount, invACount, invPCount);
