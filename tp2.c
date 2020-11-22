@@ -282,7 +282,7 @@ void strToData(char _line[], Id* _ident, size_t _idpn[]) {
     ++i;
   }
   EchangeDonnees *data = getEchangeDonnees(timestamp, signature, id, NULL);
-  if (lastStamp >= timestamp) {
+  if (timestamp >= lastStamp) {
     printf("%d %zu %zu", 15, data->timestamp, (size_t)_ident->id);
     for (int j = 0; j < 2; ++j) {
       printf(" %ld", _idpn[j]);
@@ -412,6 +412,7 @@ int main(int _argc, char **_argv) {
         }
       }
   }
+  printf("%s","\n");
   displayAverages(fullTempH, fullTempA, fullPulse);
   displayError(22, errHCount, errACount, errPCount);
   printf("%d %zu %zu %zu\n", 23, invHCount, invACount, invPCount);
