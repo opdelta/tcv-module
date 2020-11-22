@@ -58,7 +58,7 @@ Il faut d'abord récupérer le projet. Une fois récupéré, il suffit de lancer
 
    ## Processus de réflexion et démarche 
 
-   [reflexion]reflexion.md
+   [Lien vers le fichier de réflexion]
 
    ## Références
 
@@ -113,4 +113,4 @@ Pour le TP2, le projet est complété. Mon livrable prend en considération l'en
    ==3084903== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 
-[reflexion]:reflexion.md
+[Lien vers le fichier de réflexion]:reflexion.md
