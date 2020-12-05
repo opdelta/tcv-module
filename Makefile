@@ -1,4 +1,5 @@
 #MAKEFILE
+# BELLE initiatives  ... bravo.
 
 FILENAME = tp1
 FILENAME2 = tp2
@@ -15,9 +16,12 @@ $(FILENAME): $(FILENAME).c
 	gcc $(CFLAGS) -o $(FILENAME) $(FILENAME).c $(FILETARGET).o -lcunit
 
 lib:
-	wget $(FILEURL) -P ./data
-	cd data; unzip $(FILENAME).zip -d ../;rm tp1.zip
-	
+	#correction ici le reste semble ok... bravo
+	wget -q $(FILEURL) -P ./data
+	#cd data; 
+	unzip ./data/$(FILENAME).zip -d ./
+	#;rm ./data/tp1.zip  # on veut pas ca deja dans le clean... :)
+
 test-tp1a:
 			-./tp1
 
@@ -25,6 +29,7 @@ test-tp1b:
 	-./tp1 > output.txt
 	-./liste.sh output.txt
 	rm -f output.txt
+
 test-$(FILENAME2):
 	-./tp2
 
