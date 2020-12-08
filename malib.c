@@ -77,10 +77,7 @@ RssiSignal* getrssiSignal(size_t _timestamp, size_t _signature, signed short _si
 unsigned int printVersion() {
   version_t *v = malloc(sizeof(version_t));
   getVersion(v);
-  printf("%s","version #: ");
-  printf("%u.",v->major);
-  printf("%u.",v->minor);
-printf("%u\n",v->build);
+  printf("%s%u.%u.%u\n","version #: ",v->major,v->minor,v->build);
   unsigned int versionBuild = v->build;
   free(v);
   return versionBuild;
@@ -143,8 +140,7 @@ size_t strToRssi(char _line[], int _pow) {
     signature = (size_t)atoi(args[i]);
   }
   if (args[2] != NULL) {
-    id = (size_t)atoi(args[i]);
-    ids = id;
+    signal = (signed short)atoi(args[i]);
   }
   if (args[3] != NULL) {
     id = (size_t)atoi(args[i]);
@@ -196,7 +192,7 @@ void strToData(char _line[], Id* _ident, size_t _idpn[]) {
   if (args[1] != NULL) {
     signature = (size_t)atoi(args[i]);
   }
-  if (args[i] != NULL) {
+  if (args[2] != NULL) {
     id = (size_t)atoi(args[i]);
   }
   EchangeDonnees *data = getEchangeDonnees(timestamp, signature, id, NULL);
