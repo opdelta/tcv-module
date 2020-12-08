@@ -74,14 +74,6 @@ RssiSignal* getrssiSignal(size_t _timestamp, size_t _signature, signed short _si
     rssi->id = _id;
     return rssi;
 }
-unsigned int printVersion() {
-  version_t *v = malloc(sizeof(version_t));
-  getVersion(v);
-  printf("%s%u.%u.%u\n","version #: ",v->major,v->minor,v->build);
-  unsigned int versionBuild = v->build;
-  free(v);
-  return versionBuild;
-}
 char* getTransaction(char _line[]) {
    char *signature;
    signature = calloc(BUFFER_SIZE, sizeof(char));
@@ -174,12 +166,7 @@ float average(float _fullTemp, int _count) {
   float av = _fullTemp/_count;
   return av;
 }
-void displayAverages(float _mTH, float _mTA, size_t _mPul) {
-  printf("%d %.1f %.1f %zu\n", 21, _mTH, _mTA, _mPul);
-}
-void displayError(int _trans, size_t _invTH, size_t _invTA, size_t _invPul) {
-  printf("%d %zu %zu %zu\n", _trans, _invTH/3, _invTA/3, _invPul/3);
-}
+
 void strToData(char _line[], Id* _ident, size_t _idpn[]) {
   char** args = strToArray(_line);
   int i = 0;

@@ -57,7 +57,6 @@ size_t idpn [];
 
 EchangeDonnees* getEchangeDonnees(size_t _timestamp, size_t _signature, size_t _id, size_t _idpn []);
 
-unsigned int printVersion();
 char** strToArray(char* _line);
 char* getTransaction(char _line[]);
 Id* strToId(char _line[]);
@@ -65,8 +64,6 @@ float distanceCalc(signed short _signal, int _pow);
 size_t strToRssi(char _line[], int _pow);
 float strToTemp(char _line[]);
 float average(float _fullTemp, int _count);
-void displayAverages(float _mTH, float _mTA, size_t _mPul);
-void displayError(int _trans, size_t _invTH, size_t _invTA, size_t _invPul);
 void strToData(char _line[], Id* _ident, size_t _idpn[]);
 
 #endif
