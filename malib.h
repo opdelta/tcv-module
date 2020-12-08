@@ -58,6 +58,7 @@ size_t idpn [];
 EchangeDonnees* getEchangeDonnees(size_t _timestamp, size_t _signature, size_t _id, size_t _idpn []);
 
 unsigned int printVersion();
+char** strToArray(char* _line);
 char* getTransaction(char _line[]);
 Id* strToId(char _line[]);
 float distanceCalc(signed short _signal, int _pow);
