@@ -5,7 +5,7 @@ FILENAME2 = tp2
 FILETARGET2 = tcv.o malib.h malib.c
 FILETARGET = tcv
 CFLAGS = -Wall -Werror=vla -pedantic -std=c11 -I/usr/include/CUnit -L/usr/lib/x86_64-linux-gnu
-FILEURL = https://github.com/guyfrancoeur/INF3135_A2020/raw/master/tp/tp1.zip
+FILEURL = https://github.com/guyfrancoeur/INF3135_A2020/raw/master/tp/tp2.zip
 
 
 $(FILENAME2).o: $(FILENAME2).c
@@ -16,7 +16,7 @@ $(FILENAME): $(FILENAME).c
 
 lib:
 	wget -q $(FILEURL) -P ./data
-	unzip ./data/$(FILENAME).zip -d ./
+	unzip ./data/$(FILENAME2).zip -d ./
 
 test-tp1a:
 			-./tp1
