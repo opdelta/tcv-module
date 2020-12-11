@@ -60,10 +60,11 @@ EchangeDonnees* getEchangeDonnees(size_t _timestamp, size_t _signature, size_t _
 char** strToArray(char* _line);
 char* getTransaction(char _line[]);
 Id* strToId(char _line[]);
-float distanceCalc(signed short _signal, int _pow);
+float distance(int _signal, int _pow);
 size_t strToRssi(char _line[], int _pow);
 float strToTemp(char _line[]);
 float average(float _fullTemp, int _count);
 void strToData(char _line[], Id* _ident, size_t _idpn[]);
-
+int main1(int _argc, char **_argv);
+unsigned int printVersion();
 #endif
