@@ -66,6 +66,6 @@ size_t strToRssi(size_t _lastStamp, char _line[], int _pow);
 float strToTemp(size_t _lastStamp, char _line[]);
 float average(float _fullTemp, int _count);
 void strToData(size_t _lastStamp, char _line[], Id* _ident, size_t _idpn[]);
-void infoDetail(int _argc, FILE* fp);
+unsigned int infoDetail(int _argc, FILE* fp);
 unsigned int printVersion();
 #endif

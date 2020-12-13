@@ -9,11 +9,15 @@
 #define BUFFER_SIZE 1000
 
 int main(int _argc, char **_argv) {
+    unsigned int ver = 0;
     char in[BUFFER_SIZE];
     int fD = 0, fI = 0, fT = 0, fS = 0, fE = 0;
-    if (_argc > 5) {
-        fE = 1;
-        return -1;
+    //size_t trxNR = 0;
+    size_t lastStampRead = 0;
+    if (_argc > 5) { 
+        fE = 1; 
+        fprintf(stderr, "\nErreur dans les arguments. 4 arguments maximum. Arguments valides: -d -i -t -s\n");
+        return -1;  
     } else {
         for (int i = 1; i < _argc; ++i) {
             if(cmd(_argv[i]) == -1) {fE = 1;}
@@ -22,6 +26,10 @@ int main(int _argc, char **_argv) {
             else if(cmd(_argv[i]) == 2) {fT = 1;}
             else if(cmd(_argv[i]) == 3) {fS = 1;}
         }
+    }
+    if (fE == 1) { 
+        fprintf( stderr, "\nErreurs dans les arguments. Arguments valides: -d -i -t -s\n"); 
+        return -1;
     }
     FILE* input;
     input = fopen("input.data", "w");
@@ -33,27 +41,41 @@ int main(int _argc, char **_argv) {
         fputs(in, input);
     }
     fclose(input);
-    if (fI == 1) {
-        //TODO
-    }
     if (fT != 1) {
         input = fopen("input.data", "r");
-        infoDetail(_argc, input);
+        ver = infoDetail(_argc, input);
         fclose(input);
     } else { 
-        printVersion();
+        ver = printVersion();
+    }
+    if (fI == 1) {
+        Stamps* stamps = getStamps(0,0,0);
+        //size_t nrTrx = 0;
+        //size_t nonSeqStamp = 0;
+        //size_t lsr = 0;
+        fopen("input.data", "r");
+        stamps = getInfoStamp(input);
+        printf("information invalide\n  trx non reconnue : %zu\n  trx avec ts non sequentiel : %zu\n", stamps->nrTrx, stamps->nonSeqStamps);
+        lastStampRead = stamps->lastStampRead;
+        free(stamps);
+        fclose(input);
+
     }
     if (fD == 1) {
         input = fopen("input.data", "r");
         DetailTrx* details = getDetailsTrx(0,0,0,0,0);
         details = infoDetailTrx(_argc, input);
-        printf("information detaillee\n  trx01: %zu\n  trx02: %zu\n  trx03: %zu\n  trx04: %zu\n  trx05: %zu\n", details->trx01, details->trx02, details->trx03, details->trx04, details->trx05);
-        //TODO lastStamp read
+        printf("information detaillee\n  trx01 : %zu\n  trx02 : %zu\n  trx03 : %zu\n  trx04 : %zu\n  trx05 : %zu\n  le dernier ts lu : %zu\n", details->trx01, details->trx02, details->trx03, details->trx04, details->trx05, lastStampRead);
         free(details);
         fclose(input);
     }
     if (fS == 1) {
-        //TODO
+        input = fopen("input.data", "r");
+        TrxNb* trx = getTotalTrx(0,0);
+        trx = getNbTrx(ver, input);
+        printf("information sommaire\n  nbr trx valides : %zu\n  nrb trx (total) : %zu\n", trx->validTrx, trx->totalTrx);
+        free(trx);
+        fclose(input);
     }
     remove("input.data");
     return 0;

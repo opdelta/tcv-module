@@ -154,7 +154,7 @@ void strToData(size_t _lastStamp, char _line[], Id* _ident, size_t _idpn[]) {
   }
   free(data);
 }
-void infoDetail(int _argc, FILE* fp) {
+unsigned int infoDetail(int _argc, FILE* fp) {
   unsigned int ver = printVersion();
   int build = 0;
   if (ver > 1003) {
@@ -244,8 +244,8 @@ void infoDetail(int _argc, FILE* fp) {
               }
             }
         } else if(strcmp(signature2, "04") == 0) { //Signature RSSI
-            size_t(*pt)(size_t, char [], int) = &strToRssi; //FIX
-            idpn[nbIdpn] = (*pt)(lastStamp, fullLine, pow); //FIX
+            size_t(*pt)(size_t, char [], int) = &strToRssi;
+            idpn[nbIdpn] = (*pt)(lastStamp, fullLine, pow);
             ++nbIdpn; //End signature RSSI
         } else if(strcmp(signature2, "05") == 0) { //Signature data
             strToData(lastStamp, fullLine, ident, idpn);
@@ -257,4 +257,5 @@ void infoDetail(int _argc, FILE* fp) {
   printf("%d %zu %zu %zu\n", 23, errs[3], errs[4], errs[5]);
   free(ident);
   free(line2);
+  return ver;
 }
