@@ -2,6 +2,7 @@
 #ifndef __MALIB_H__
 #define __MALIB_H__
 #include <stddef.h>
+#include <stdio.h>
 
 typedef struct {
 size_t timestamp;
@@ -59,12 +60,12 @@ EchangeDonnees* getEchangeDonnees(size_t _timestamp, size_t _signature, size_t _
 
 char** strToArray(char* _line);
 char* getTransaction(char _line[]);
-Id* strToId(char _line[]);
+Id* strToId(size_t _lastStamp, char _line[]);
 float distance(int _signal, int _pow);
-size_t strToRssi(char _line[], int _pow);
-float strToTemp(char _line[]);
+size_t strToRssi(size_t _lastStamp, char _line[], int _pow);
+float strToTemp(size_t _lastStamp, char _line[]);
 float average(float _fullTemp, int _count);
-void strToData(char _line[], Id* _ident, size_t _idpn[]);
-int main1(int _argc, char **_argv);
+void strToData(size_t _lastStamp, char _line[], Id* _ident, size_t _idpn[]);
+void infoDetail(int _argc, FILE* fp);
 unsigned int printVersion();
 #endif

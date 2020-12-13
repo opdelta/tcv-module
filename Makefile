@@ -5,18 +5,19 @@ FILENAME2 = tp2
 FILENAME3 = tp3
 FILETARGET2 = tcv.o malib.h malib.c
 FILETARGET = tcv
-FILETARGET3 = tcv.o malib.h malib.c outil3.h
+FILETARGET3 = tcv.o malib.h malib.c outil3.h outil3.c
 CFLAGS = -Wall -Werror=vla -pedantic -std=c11 -I/usr/include/CUnit -L/usr/lib/x86_64-linux-gnu
 FILEURL = https://github.com/guyfrancoeur/INF3135_A2020/raw/master/tp/tp2.zip
 
+$(FILENAME3): $(FILENAME3).c
+	gcc $(CFLAGS) -o $(FILENAME3) $(FILENAME3).c $(FILETARGET3) -lm
 
-$(FILENAME2).o: $(FILENAME2).c
-	gcc $(CFLAGS) -o $(FILENAME2) $(FILENAME2).c $(FILETARGET2) -lm
+$(FILENAME2): $(FILENAME2).c
+	gcc $(CFLAGS) -o $(FILENAME2) $(FILENAME2).c $(FILETARGET3) -lm
 
 $(FILENAME): $(FILENAME).c
 	gcc $(CFLAGS) -o $(FILENAME) $(FILENAME).c $(FILETARGET).o -lcunit
-$(FILENAME3): $(FILENAME3).c
-	gcc $(CFLAGS) -o $(FILENAME3) $(FILENAME3).c $(FILETARGET3) -lm
+
 lib:
 	wget -q $(FILEURL) -P ./data
 	unzip ./data/$(FILENAME2).zip -d ./
