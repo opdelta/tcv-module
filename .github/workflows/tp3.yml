@@ -30,7 +30,7 @@ jobs:
         run: |
           sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev
           wget https://github.com/guyfrancoeur/INF3135_A2020/raw/master/tp/tp2.zip -P ./data
-          cd data; unzip tp1.zip -d ../;rm tp1.zip
+          cd data; unzip tp2.zip -d ../;rm tp2.zip
           
 
       # Runs a set of commands using the runners shell
