@@ -1,5 +1,7 @@
 # Travail pratique 3
 
+![TP3 build](https://github.com/opdelta/inf3135-a2020/workflows/tp3/badge.svg)
+
    ## Description
 
  TCV est un projet d'actualité, qui veut dire : tous contrent le virus (ou les virus). Ce logiciel permet de programmer un module (un Beacon) qui traite de l'information reçue
