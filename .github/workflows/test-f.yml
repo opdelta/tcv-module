@@ -43,6 +43,7 @@ jobs:
           echo -e "\n\n" >> fonctionnel.md
           git config --global user.name 'opdelta'
           git config --global user.email 'opdelta@users.noreply.github.com'
+          git pull --rebase origin tp3
           git add fonctionnel.md
           git commit fonctionnel.md -m 'Resultats de la fonctionalité'
           git push origin
