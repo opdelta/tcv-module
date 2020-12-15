@@ -7,11 +7,8 @@
 #include <stddef.h>
 #include <stdbool.h>
 #define BUFFER_SIZE 1000
-
 int main(int _argc, char **_argv) {
-    unsigned int ver = 0;
-    char in[BUFFER_SIZE];
-    int fD = 0, fI = 0, fT = 0, fS = 0, fE = 0;size_t lastStampRead = 0;
+    unsigned int ver = 0; char in[BUFFER_SIZE]; int fD = 0, fI = 0, fT = 0, fS = 0, fE = 0;size_t lastStampRead = 0;
     if (_argc > 5) { 
         fE = 1; 
         fprintf(stderr, "\nErreur dans les arguments. 4 arguments maximum. Arguments valides: -d -i -t -s\n");
@@ -48,9 +45,6 @@ int main(int _argc, char **_argv) {
     }
     if (fI == 1) {
         Stamps* stamps = getStamps(0,0,0);
-        //size_t nrTrx = 0;
-        //size_t nonSeqStamp = 0;
-        //size_t lsr = 0;
         fopen("input.data", "r");
         stamps = getInfoStamp(input);
         printf("information invalide\n  trx non reconnue : %zu\n  trx avec ts non sequentiel : %zu\n", stamps->nrTrx, stamps->nonSeqStamps);
