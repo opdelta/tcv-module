@@ -99,8 +99,7 @@ float strToTemp(size_t _lastStamp, char _line[]) {
   return temp;
 }
 void strToData(size_t _lastStamp, char _line[], Id* _ident, size_t _idpn[]) {
-  char** args = strToArray(_line); size_t signature = (size_t)atoi(args[1]); size_t timestamp = (size_t)atoi(args[0]); size_t id = (size_t)atoi(args[3]);
-  EchangeDonnees *data = getEchangeDonnees(timestamp, signature, id, NULL);
+  char** args = strToArray(_line); size_t signature = (size_t)atoi(args[1]); size_t timestamp = (size_t)atoi(args[0]); size_t id = (size_t)atoi(args[3]); EchangeDonnees *data = getEchangeDonnees(timestamp, signature, id, NULL);
   if (timestamp >= _lastStamp) {
     printf("%d %zu %zu", 15, data->timestamp, (size_t)_ident->id);
     for (int j = 0; j < 2; ++j) {
@@ -111,7 +110,6 @@ void strToData(size_t _lastStamp, char _line[], Id* _ident, size_t _idpn[]) {
   free(data);
 }
 unsigned int infoDetail(int _argc, FILE* fp) {
-
   unsigned int ver = printVersion(); char* line2; char* signature2;line2 = calloc(BUFFER_SIZE, sizeof(char)); char fullLine[BUFFER_SIZE]; Id* ident = NULL; int nbIdpn = 0;size_t idpn[3];
   int build = 0; int pow = 2; signature2 = calloc(BUFFER_SIZE, sizeof(char));
   if (ver > 1003) build = 1;
