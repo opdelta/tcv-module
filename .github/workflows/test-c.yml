@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: tp3
+name: test-c
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the main branch
@@ -28,12 +28,8 @@ jobs:
       # Runs a single command using the runners shell sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev
       - name: Setup workspace
         run: |
-          sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev
           wget https://github.com/guyfrancoeur/INF3135_A2020/raw/master/tp/tp2.zip -P ./data
           cd data; unzip tp2.zip -d ../;rm tp2.zip
-          Rscript -e 'install.packages("rmarkdown")'
-          Rscript -e 'rmarkdown::render("compilation.md")'
-
       # Runs a set of commands using the runners shell
       - name: Compilation
         run: |
@@ -41,6 +37,7 @@ jobs:
 
       - name: Commit compilation
         run: |
+          echo "Compilation effectuée avec succès: gcc -Wall -Werror=vla -pedantic -std=c11 -I/usr/include/CUnit -L/usr/lib/x86_64-linux-gnu -o tp3 tp3.c tcv.o malib.h malib.c outil3.h outil3.c -lm" > compilation.md
           git add compilation.md
-          git commit compilation.md -m 'Resultats de la compilation' || echo "Compilation effectuée avec succès: gcc -Wall -Werror=vla -pedantic -std=c11 -I/usr/include/CUnit -L/usr/lib/x86_64-linux-gnu -o tp3 tp3.c tcv.o malib.h malib.c outil3.h outil3.c -lm"
+          git commit compilation.md -m 'Resultats de la compilation'
           git push origin || echo "Compilation effectuée avec succès: gcc -Wall -Werror=vla -pedantic -std=c11 -I/usr/include/CUnit -L/usr/lib/x86_64-linux-gnu -o tp3 tp3.c tcv.o malib.h malib.c outil3.h outil3.c -lm"
