@@ -45,7 +45,11 @@ Il faut d'abord récupérer le projet. Une fois récupéré, il suffit de lancer
 
    - ```make clean``` nettoie le dossier pour garder que le nécessaire.
    
-   - ```make``` compile le programme tp2.c pour créer un exécutable.
+   - ```make debug``` compile le tp3.c avec les options de debug.
+   
+   - ```make``` compile le programme tp3.c pour créer un exécutable.
+
+   - ```make tp3``` compile le programme tp3.c.
    
    - ```make test-tp1a``` lance les tests unitaires et affiche tout à l'écran.
 
@@ -53,13 +57,17 @@ Il faut d'abord récupérer le projet. Une fois récupéré, il suffit de lancer
    
    - ```make test-tp2``` lance le programme principal et prend en stdin les transactions et retourne en stdout les résultats.
 
-   - ```cp.txt```  contient le nom et le code permanent de l'auteur.
+```cp.txt```  contient le nom et le code permanent de l'auteur.
 
-   - ```.gitignore``` contient une liste de tous les fichiers à ignorer par Git. (Template utilisé: GitHub)
+```.gitignore``` contient une liste de tous les fichiers à ignorer par Git. (Template utilisé: GitHub)
 
-   - ```README.md``` Contient les informations du répertoire courant.
+```README.md``` Contient les informations du répertoire courant.
 
-   - ```.github/workflows/tp2.yml``` Contient le fichier yaml pour l'automatisation des tests.
+```.github/workflows/``` Contient les fichiers yaml pour l'automatisation des tests.
+
+- ```malib.c``` et ```malib.h``` contient les librairies ```malib``` en C.
+
+- ```outil3.c``` et ```outil3.h``` contient les librairies ```outil3``` pour le TP3 en C.
 
    ## Références
 
@@ -89,5 +97,18 @@ validerSignal_2
 
 Pour le TP2, le projet est complété. Mon livrable prend en considération l'entrée standard que ce soit un fichier fourni en argument ou directement lancé et va analyser chacune des lignes et traiter les commandes. J'ai été en mesure de faire les allocations de mémoire necéssaires pour que les lignes soient lues comme il faut en utilisant par moment un BUFFER_SIZE afin de d'éviter des allocations en trop.
 
+Pour le TP3, les options fonctionnent correctement et aucun bug n'a été décelé lors des tests. Les options supportées sont: ```-d -i -t -s```.
+
+Voici les cas et les traitements en fonction des options : 
+ - option `-i` `information invalide`
+   + Lorsqu'un code de transaction n'est reconnu;
+   + Lorsque le timestamp est inférieur au temps précédent;
+ - option `-d` `information détaillée`
+   + Le nombre de transactions pour chacun des types de transactions;
+ - option `-s` `information sommaire`
+   + Le nombre total de transactions valides;
+   + Le nombre total de transactions reçues;
+ - option `-t` `mode tranquille`
+   + Le mode tranquille n'affiche pas transaction en sortie;
 
 [Lien vers le fichier de réflexion]:reflexion.md
