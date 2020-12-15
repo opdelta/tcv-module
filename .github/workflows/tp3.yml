@@ -52,4 +52,8 @@ jobs:
       - name: tp3
         run: |
           ./tp3 -d -i -t -s < in.txt
+<<<<<<< HEAD
           ./tp3 -d -i -s < in2.txt
+=======
+          ./tp3 -d -i -s < in2.txt
+>>>>>>> 3f6f4c8f36947a49e50d80086dcc5fa5e95c0312

@@ -56,10 +56,13 @@ Il faut d'abord récupérer le projet. Une fois récupéré, il suffit de lancer
 
    - ```.github/workflows/tp2.yml``` Contient le fichier yaml pour l'automatisation des tests.
 
+<<<<<<< HEAD
    ## Processus de réflexion et démarche 
 
    [Lien vers le fichier de réflexion]
 
+=======
+>>>>>>> 3f6f4c8f36947a49e50d80086dcc5fa5e95c0312
    ## Références
 
    - https://github.com/guyfrancoeur/INF3135_A2020/
@@ -112,5 +115,8 @@ Pour le TP2, le projet est complété. Mon livrable prend en considération l'en
    ==3084903== For lists of detected and suppressed errors, rerun with: -s
    ==3084903== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
+<<<<<<< HEAD
 
 [Lien vers le fichier de réflexion]:reflexion.md
+=======
+>>>>>>> 3f6f4c8f36947a49e50d80086dcc5fa5e95c0312
