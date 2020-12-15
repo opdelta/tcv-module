@@ -10,24 +10,16 @@
 #define BUFFER_SIZE 1000
 DetailTrx* getDetailsTrx(size_t _trx1, size_t _trx2, size_t _trx3, size_t _trx4, size_t _trx5) {
     DetailTrx *details = malloc(sizeof(DetailTrx));
-    details->trx01 = _trx1;
-    details->trx02 = _trx2;
-    details->trx03 = _trx3;
-    details->trx04 = _trx4;
-    details->trx05 = _trx5;
+    details->trx01 = _trx1;details->trx02 = _trx2;details->trx03 = _trx3;details->trx04 = _trx4;details->trx05 = _trx5;
     return details;
 }
 Stamps* getStamps(size_t _nsst, size_t _lsr, size_t _nrTrx) {
     Stamps* stamp = malloc(sizeof(Stamps));
-    stamp->nonSeqStamps = _nsst;
-    stamp->lastStampRead = _lsr;
-    stamp->nrTrx = _nrTrx;
+    stamp->nonSeqStamps = _nsst;stamp->lastStampRead = _lsr;stamp->nrTrx = _nrTrx;
     return stamp;
 }
 float distance(int _signal, int _pow) {
-  float temp1 = -69 - _signal;
-  float temp2 = 10 * _pow;
-  float temp3 = temp1/temp2;
+  float temp1 = -69 - _signal;float temp2 = 10 * _pow;float temp3 = temp1/temp2;
   float distance = pow(10,temp3);
   return distance;
 }
@@ -54,21 +46,9 @@ int cmd(char* arg) {
 }
 
 TrxNb* getNbTrx(unsigned int _ver, FILE* _input) {
-    char* line;
-    int build = 0;
-    if (_ver > 1003) {
-        build = 1;
-    }
-    line = calloc(BUFFER_SIZE, sizeof(char));
-    char* signature;
-    signature = calloc(BUFFER_SIZE, sizeof(char));
-    char* (*pt)(char []) = &getTransaction;
-    float (*pf)(size_t, char[]) = &strToTemp;
-    size_t totalTrx = 0;
-    size_t validTrx = 0;
-    char fullLine[BUFFER_SIZE];
-    size_t lastStamp = 0;
-    float temp = 0;
+    char* line; char* signature; signature = calloc(BUFFER_SIZE, sizeof(char)); char* (*pt)(char []) = &getTransaction; float (*pf)(size_t, char[]) = &strToTemp;
+    int build = 0; line = calloc(BUFFER_SIZE, sizeof(char)); size_t totalTrx = 0; size_t validTrx = 0; char fullLine[BUFFER_SIZE]; size_t lastStamp = 0; float temp = 0;
+    if (_ver > 1003) build = 1;
     while (fgets(line, BUFFER_SIZE, _input) != NULL) {
         if (line != NULL) {
             strcpy(fullLine,line);
@@ -77,59 +57,36 @@ TrxNb* getNbTrx(unsigned int _ver, FILE* _input) {
             break;
         }
         totalTrx++;
-        switch (atoi(signature))
-        {
-            case 0: 
-                validTrx++;
-            break;
-            case 1: 
-                
-                temp = (*pf)(lastStamp, fullLine);
+        switch (atoi(signature)) {
+            case 0: validTrx++; break;
+            case 1: temp = (*pf)(lastStamp, fullLine);
                 if (!(temp == -999) && temp != -1000) {
-                    if (validerTH_1((int)temp*10)) {
-                        validTrx++;
-                    }
+                    if (validerTH_1((int)temp*10)) validTrx++;
                 }
                 break;
-            case 2: 
-
-                temp = (*pf)(lastStamp, fullLine);
+            case 2: temp = (*pf)(lastStamp, fullLine);
                 if (!(temp == -999) && temp != -1000) {
                     switch(build) 
                     {
                     case 0:
-                        if (validerTA_3((short)temp)) {
-                            validTrx++;
-                        }
+                        if (validerTA_3((short)temp)) validTrx++;
                     break;
                     default: 
-                        if (validerTA_1((int)temp)) {
-                            validTrx++;
-                        }
+                        if (validerTA_1((int)temp)) validTrx++;
                     }
                 }
                 break;
-            case 3: 
-
-                temp = (*pf)(lastStamp, fullLine);
+            case 3: temp = (*pf)(lastStamp, fullLine);
                 if (!(temp == -999) && temp != -1000) {
                     if (build == 0) {
-                        if (validerPulsation_3((short)temp)) {
-                            validTrx++;
-                        }
+                        if (validerPulsation_3((short)temp)) validTrx++;
                     } else {
-                        if(validerPulsation_1((int)temp)) {
-                            validTrx++;
-                        }
+                        if(validerPulsation_1((int)temp)) validTrx++;
                     }
                 }
                 break;
-            case 4: 
-                validTrx++;
-                break;
-            case 5: 
-                validTrx++;
-                break;
+            case 4: validTrx++; break;
+            case 5: validTrx++; break;
         }
     }
     TrxNb* trxStruct = getTotalTrx(totalTrx, validTrx);
@@ -137,15 +94,8 @@ TrxNb* getNbTrx(unsigned int _ver, FILE* _input) {
 }
 Stamps* getInfoStamp(FILE* _input) {
     size_t arr[4] = {0, 0, 0, 0}; //arr[0] = nonSeqStamp arr[1] = lastStampRead arr[2] = all stamps arr[3] = nrTrx
-    char* line;
-    Stamps* stamp = NULL;
-    line = calloc(BUFFER_SIZE, sizeof(char));
-    char *signature;
-    signature = calloc(BUFFER_SIZE, sizeof(char));
-    char* (*pt)(char []) = &getTransaction;
-    char* sign;
-    sign = calloc(BUFFER_SIZE, sizeof(char));
-    char fullLine[BUFFER_SIZE];
+    char* line; Stamps* stamp = NULL; line = calloc(BUFFER_SIZE, sizeof(char)); char *signature; signature = calloc(BUFFER_SIZE, sizeof(char)); char* (*pt)(char []) = &getTransaction;
+    char* sign; sign = calloc(BUFFER_SIZE, sizeof(char)); char fullLine[BUFFER_SIZE];
     while (fgets(line, BUFFER_SIZE, _input) != NULL) {
         if (line != NULL) {
             strcpy(fullLine, line);
@@ -154,15 +104,9 @@ Stamps* getInfoStamp(FILE* _input) {
         } else {
             break;
         }
-        if (atoi(signature) >= 0) {
-            arr[2] = arr[2]+1;
-        }
-        if (!(atoi(signature) >= arr[1])) {
-            arr[0] = arr[0] + 1;
-        }
-        if (atoi(sign) < 0 || atoi(sign) > 5) {
-            arr[3] = arr[3] + 1;
-        }
+        if (atoi(signature) >= 0) arr[2] = arr[2]+1;
+        if (!(atoi(signature) >= arr[1])) arr[0] = arr[0] + 1;
+        if (atoi(sign) < 0 || atoi(sign) > 5) arr[3] = arr[3] + 1;
         arr[1] = (size_t)(atoi(signature));
     }
     stamp = getStamps(arr[0],arr[1], arr[3]);
@@ -170,13 +114,9 @@ Stamps* getInfoStamp(FILE* _input) {
 }
 
 DetailTrx* infoDetailTrx(int _argc, FILE* _fp) {
-    char* line;
-    line = calloc(BUFFER_SIZE, sizeof(char));
-    char* signature;
-    char fullLine[BUFFER_SIZE];
+    char* line; line = calloc(BUFFER_SIZE, sizeof(char)); char* signature; char fullLine[BUFFER_SIZE];
     size_t trxNb[5] = {0,0,0,0,0}; //trxNb[0] = trx 01, trxNb[1] = trx 02, trxNb[2] = trx 03, trxNb[3] = trx 04, trx[4] = trx 05
-    signature = calloc(BUFFER_SIZE, sizeof(char));
-    char* (*pt)(char []) = &getTransaction;
+    signature = calloc(BUFFER_SIZE, sizeof(char)); char* (*pt)(char []) = &getTransaction;
     while (fgets(line, BUFFER_SIZE, _fp) != NULL) {
         if (line != NULL) {
             strcpy(fullLine, line);
