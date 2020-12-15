@@ -1,14 +1,14 @@
 # This is a basic workflow to help you get started with Actions
 
-name: tp2
+name: tp3
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the main branch
 on:
   push:
-    branches: [ tp2, testunitaire ]
+    branches: [ tp3, tp2, testunitaire ]
   pull_request:
-    branches: [ tp2, testunitaire ]
+    branches: [ tp3, tp2, testunitaire ]
     paths:
       - 'test/in.txt'
       - 'test/in2.dat'
