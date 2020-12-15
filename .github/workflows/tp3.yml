@@ -6,9 +6,9 @@ name: tp3
 # events but only for the main branch
 on:
   push:
-    branches: [ tp3, tp2, testunitaire ]
+    branches: [ tp3 ]
   pull_request:
-    branches: [ tp3, tp2, testunitaire ]
+    branches: [ tp3 ]
     paths:
       - 'test/in.txt'
       - 'test/in2.dat'
