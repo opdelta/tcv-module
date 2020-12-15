@@ -39,10 +39,13 @@ jobs:
         run: |
           date >> fonctionnel.md
           echo -e "\n" >> fonctionnel.md
-          cat in.txt | ./tp3 -d -i -t -s >> fonctionnel.md
+          cat test/in.txt | ./tp3 -d -i -t -s >> fonctionnel.md
           echo -e "\n\n" >> fonctionnel.md
           git config --global user.name 'opdelta'
           git config --global user.email 'opdelta@users.noreply.github.com'
+          echo "Waiting for other tasks to complete..."
+          sleep 20
+          echo "Continuing process."
           git add fonctionnel.md
           git commit fonctionnel.md -m 'Resultats de la fonctionalité'
           git pull
