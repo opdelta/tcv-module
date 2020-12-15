@@ -69,6 +69,10 @@ Il faut d'abord récupérer le projet. Une fois récupéré, il suffit de lancer
 
 - ```outil3.c``` et ```outil3.h``` contient les librairies ```outil3``` pour le TP3 en C.
 
+   ## Processus de réflexion et de démarche
+
+[Lien vers le fichier de réflexion]
+
    ## Références
 
    - https://github.com/guyfrancoeur/INF3135_A2020/
