@@ -1,4 +1,4 @@
-# Travail pratique 2
+# Travail pratique 3
 
    ## Description
 
@@ -56,13 +56,6 @@ Il faut d'abord récupérer le projet. Une fois récupéré, il suffit de lancer
 
    - ```.github/workflows/tp2.yml``` Contient le fichier yaml pour l'automatisation des tests.
 
-<<<<<<< HEAD
-   ## Processus de réflexion et démarche 
-
-   [Lien vers le fichier de réflexion]
-
-=======
->>>>>>> 3f6f4c8f36947a49e50d80086dcc5fa5e95c0312
    ## Références
 
    - https://github.com/guyfrancoeur/INF3135_A2020/
@@ -89,34 +82,7 @@ validerSignal_2
    
    Chaque test cherchait à valider les bornes des fonctions, une valeur en plein milieu des bornes et des valeurs à l'extrême. Donc pour chaque test, il y avait à peu près 6 asserts.
 
-Pour le TP2, le projet est complété. Mon livrable prend en considération l'entrée standard que ce soit un fichier fourni en argument ou directement lancé et va analyser chacune des lignes et traiter les commandes. J'ai été en mesure de faire les allocations de mémoire necéssaires pour que les lignes soient lues comme il faut en utilisant par moment un BUFFER_SIZE afin de d'éviter des allocations en trop. Voici le résultat de valgrind lorsqu'on utilise l'entrée fournie dans l'énoncé du TP.
+Pour le TP2, le projet est complété. Mon livrable prend en considération l'entrée standard que ce soit un fichier fourni en argument ou directement lancé et va analyser chacune des lignes et traiter les commandes. J'ai été en mesure de faire les allocations de mémoire necéssaires pour que les lignes soient lues comme il faut en utilisant par moment un BUFFER_SIZE afin de d'éviter des allocations en trop.
 
-```bash
-   version #: 0.1.1002
-   ==3084903== Memcheck, a memory error detector
-   ==3084903== Copyright (C) 2002-2017, and GNU GPL\'d, by Julian Seward et al.
-   ==3084903== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-   ==3084903== Command: cat in.txt
-   ==3084903==
-   10 0 1000 3
-   14 17599 1929292 3.4
-   14 19012 1929298 0.1
-   15 19511 5 1929298 100123 100987
-   21 38.2 -10.2 157
-   22 0 0 0
-   23 0 0 0
-   ==3084903==
-   ==3084903== HEAP SUMMARY:
-   ==3084903==     in use at exit: 0 bytes in 0 blocks
-   ==3084903==   total heap usage: 31 allocs, 31 frees, 1,056,736 bytes allocated
-   ==3084903==
-   ==3084903== All heap blocks were freed -- no leaks are possible
-   ==3084903==
-   ==3084903== For lists of detected and suppressed errors, rerun with: -s
-   ==3084903== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-```
-<<<<<<< HEAD
 
 [Lien vers le fichier de réflexion]:reflexion.md
-=======
->>>>>>> 3f6f4c8f36947a49e50d80086dcc5fa5e95c0312
