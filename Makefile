@@ -18,6 +18,8 @@ $(FILENAME2): $(FILENAME2).c
 $(FILENAME): $(FILENAME).c
 	gcc $(CFLAGS) -o $(FILENAME) $(FILENAME).c $(FILETARGET).o -lcunit
 
+debug:
+	gcc $(CFLAGS) -g -o $(FILENAME3) $(FILENAME3).c $(FILETARGET3) -lm
 lib:
 	wget -q $(FILEURL) -P ./data
 	unzip ./data/$(FILENAME2).zip -d ./

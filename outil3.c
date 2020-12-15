@@ -126,8 +126,10 @@ TrxNb* getNbTrx(unsigned int _ver, FILE* _input) {
                 break;
             case 4: 
                 validTrx++;
+                break;
             case 5: 
                 validTrx++;
+                break;
         }
     }
     TrxNb* trxStruct = getTotalTrx(totalTrx, validTrx);
