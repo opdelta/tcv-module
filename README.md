@@ -1,8 +1,8 @@
 # Travail pratique 3
 
-![TP3 build](https://github.com/opdelta/inf3135-a2020/workflows/tp3/badge.svg)
-
 ![TP3 compilation](https://github.com/opdelta/inf3135-a2020/workflows/test-c/badge.svg)
+
+![TP3 fonctionnel](https://github.com/opdelta/inf3135-a2020/workflows/test-f/badge.svg)
 
 
    ## Description
