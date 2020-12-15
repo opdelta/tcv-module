@@ -33,5 +33,5 @@
 
    Si la comparaison passe, alors le programme affiche la transaction demandée, sinon elle l'ignore. Si la comparaison passe, on égale ```lastStamp``` avec ```timestamp```.
 
-
-   
+  ## outil3.c outil3.h
+  Pour le TP3, le refactoring du tp2 était de loin la partie la plus longue. J'ai procédé de la même façon que le TP2 pour le TP3. Je me suis cependant rendu compte que je ne pouvais pas utiliser l'entrée en ```stdin``` des données plus d'une fois. J'ai donc enregistré le ```stdin``` dans un ```FILE * input``` que j'utilisais donc pour donner à mes fonctions pour la lecture des informations et le traitement. 
