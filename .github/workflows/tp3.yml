@@ -46,4 +46,4 @@ jobs:
       - name: tp3
         run: |
           ./tp3 -d -i -t -s < test/in.txt
-          ./tp3 -d -i -s < test/in2.txt
+          ./tp3 -d -i -s < test/in2.dat
