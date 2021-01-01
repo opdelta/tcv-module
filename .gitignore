@@ -14,6 +14,7 @@ dkms.conf
 *.exp
 *.gch
 *.guy
+*.guy*.guy
 *.hex
 *.i*86
 *.idb
@@ -44,4 +45,3 @@ Module.symvers
 *.su
 .tmp_versions/
 *.x86_64
-*.guy
