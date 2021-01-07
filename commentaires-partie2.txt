@@ -1,12 +1,18 @@
 
+**** bravo recuperation tp3 ****
 *** compilation ***
  
 **** differences ****
 4
 4
+3
 4
-18
+10
 12
-18
+19
+0
+3
+2
  
 Correction fin.
+Vous n'avez pas un code permanent conforme dans cp.txt, GF recherche ailleur dans le depot...
