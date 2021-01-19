@@ -1,4 +1,9 @@
-# Travail pratique 2
+# Travail pratique 3
+
+![TP3 compilation](https://github.com/opdelta/inf3135-a2020/workflows/test-c/badge.svg)
+
+![TP3 fonctionnel](https://github.com/opdelta/inf3135-a2020/workflows/test-f/badge.svg)
+
 
    ## Description
 
@@ -40,7 +45,11 @@ Il faut d'abord récupérer le projet. Une fois récupéré, il suffit de lancer
 
    - ```make clean``` nettoie le dossier pour garder que le nécessaire.
    
-   - ```make``` compile le programme tp2.c pour créer un exécutable.
+   - ```make debug``` compile le tp3.c avec les options de debug.
+   
+   - ```make``` compile le programme tp3.c pour créer un exécutable.
+
+   - ```make tp3``` compile le programme tp3.c.
    
    - ```make test-tp1a``` lance les tests unitaires et affiche tout à l'écran.
 
@@ -48,13 +57,21 @@ Il faut d'abord récupérer le projet. Une fois récupéré, il suffit de lancer
    
    - ```make test-tp2``` lance le programme principal et prend en stdin les transactions et retourne en stdout les résultats.
 
-   - ```cp.txt```  contient le nom et le code permanent de l'auteur.
+```cp.txt```  contient le nom et le code permanent de l'auteur.
 
-   - ```.gitignore``` contient une liste de tous les fichiers à ignorer par Git. (Template utilisé: GitHub)
+```.gitignore``` contient une liste de tous les fichiers à ignorer par Git. (Template utilisé: GitHub)
 
-   - ```README.md``` Contient les informations du répertoire courant.
+```README.md``` Contient les informations du répertoire courant.
 
-   - ```.github/workflows/tp2.yml``` Contient le fichier yaml pour l'automatisation des tests.
+```.github/workflows/``` Contient les fichiers yaml pour l'automatisation des tests.
+
+- ```malib.c``` et ```malib.h``` contient les librairies ```malib``` en C.
+
+- ```outil3.c``` et ```outil3.h``` contient les librairies ```outil3``` pour le TP3 en C.
+
+   ## Processus de réflexion et de démarche
+
+[Lien vers le fichier de réflexion]
 
    ## Références
 
@@ -82,29 +99,20 @@ validerSignal_2
    
    Chaque test cherchait à valider les bornes des fonctions, une valeur en plein milieu des bornes et des valeurs à l'extrême. Donc pour chaque test, il y avait à peu près 6 asserts.
 
-Pour le TP2, le projet est complété. Mon livrable prend en considération l'entrée standard que ce soit un fichier fourni en argument ou directement lancé et va analyser chacune des lignes et traiter les commandes. J'ai été en mesure de faire les allocations de mémoire necéssaires pour que les lignes soient lues comme il faut en utilisant par moment un BUFFER_SIZE afin de d'éviter des allocations en trop. Voici le résultat de valgrind lorsqu'on utilise l'entrée fournie dans l'énoncé du TP.
+Pour le TP2, le projet est complété. Mon livrable prend en considération l'entrée standard que ce soit un fichier fourni en argument ou directement lancé et va analyser chacune des lignes et traiter les commandes. J'ai été en mesure de faire les allocations de mémoire necéssaires pour que les lignes soient lues comme il faut en utilisant par moment un BUFFER_SIZE afin de d'éviter des allocations en trop.
 
-```bash
-   version #: 0.1.1002
-   ==3084903== Memcheck, a memory error detector
-   ==3084903== Copyright (C) 2002-2017, and GNU GPL\'d, by Julian Seward et al.
-   ==3084903== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-   ==3084903== Command: cat in.txt
-   ==3084903==
-   10 0 1000 3
-   14 17599 1929292 3.4
-   14 19012 1929298 0.1
-   15 19511 5 1929298 100123 100987
-   21 38.2 -10.2 157
-   22 0 0 0
-   23 0 0 0
-   ==3084903==
-   ==3084903== HEAP SUMMARY:
-   ==3084903==     in use at exit: 0 bytes in 0 blocks
-   ==3084903==   total heap usage: 31 allocs, 31 frees, 1,056,736 bytes allocated
-   ==3084903==
-   ==3084903== All heap blocks were freed -- no leaks are possible
-   ==3084903==
-   ==3084903== For lists of detected and suppressed errors, rerun with: -s
-   ==3084903== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-```
+Pour le TP3, les options fonctionnent correctement et aucun bug n'a été décelé lors des tests. Les options supportées sont: ```-d -i -t -s```.
+
+Voici les cas et les traitements en fonction des options : 
+ - option `-i` `information invalide`
+   + Lorsqu'un code de transaction n'est reconnu;
+   + Lorsque le timestamp est inférieur au temps précédent;
+ - option `-d` `information détaillée`
+   + Le nombre de transactions pour chacun des types de transactions;
+ - option `-s` `information sommaire`
+   + Le nombre total de transactions valides;
+   + Le nombre total de transactions reçues;
+ - option `-t` `mode tranquille`
+   + Le mode tranquille n'affiche pas transaction en sortie;
+
+[Lien vers le fichier de réflexion]:reflexion.md

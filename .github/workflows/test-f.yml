@@ -1,0 +1,52 @@
+# This is a basic workflow to help you get started with Actions
+
+name: test-f
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    branches: [ tp3 ]
+  pull_request:
+    branches: [ tp3 ]
+    paths:
+      - 'test/in.txt'
+      - 'test/in2.dat'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev
+      - name: Setup workspace
+        run: |
+          wget https://github.com/guyfrancoeur/INF3135_A2020/raw/master/tp/tp2.zip -P ./data
+          cd data; unzip tp2.zip -d ../;rm tp2.zip
+      # Runs a set of commands using the runners shell
+      - name: Compilation
+        run: |
+          make tp3
+
+      - name: Commit compilation
+        run: |
+          date >> fonctionnel.md
+          echo -e "\n" >> fonctionnel.md
+          cat test/in.txt | ./tp3 -d -i -t -s >> fonctionnel.md
+          echo -e "\n\n" >> fonctionnel.md
+          git config --global user.name 'opdelta'
+          git config --global user.email 'opdelta@users.noreply.github.com'
+          echo "Waiting for other tasks to complete..."
+          sleep 20
+          echo "Continuing process."
+          git add fonctionnel.md
+          git commit fonctionnel.md -m 'Resultats de la fonctionalité'
+          git pull
+          git push origin

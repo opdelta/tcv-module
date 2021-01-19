@@ -1,0 +1,47 @@
+
+*.a
+*.app
+*.cmd
+*.d
+# Debug files
+dkms.conf
+*.dll
+*.dSYM/
+*.dylib
+*.elf
+*.exe
+# Executables
+*.exp
+*.gch
+*.guy
+*.guy*.guy
+*.hex
+*.i*86
+*.idb
+*.ilk
+# Kernel Module Compile Results
+*.ko
+*.la
+*.lib
+# Libraries
+# Linker output
+*.lo
+*.map
+Mkfile.old
+*.mod*
+modules.order
+Module.symvers
+*.o
+*.obj
+# Object files
+*.out
+*.pch
+*.pdb
+# Precompiled Headers
+# Prerequisites
+# Shared objects (inc. Windows DLLs)
+*.so
+*.so.*
+*.su
+.tmp_versions/
+*.x86_64
