@@ -21,7 +21,6 @@ $(FILENAME): $(FILENAME).c
 debug:
 	gcc $(CFLAGS) -g -o $(FILENAME3) $(FILENAME3).c $(FILETARGET3) -lm
 lib:
-	wget -q $(FILEURL) -P ./data
 	unzip ./data/$(FILENAME2).zip -d ./
 
 test-tp1a:
